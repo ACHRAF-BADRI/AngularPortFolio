@@ -1,0 +1,310 @@
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.about {
+  padding: 20px;
+  text-align: center;
+  animation: slideInFromBottom 1s ease-out forwards;
+}
+
+.about h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 64px;
+}
+
+.about-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 400px;
+  perspective: 1000px;
+  margin-top: 80px;
+  margin-left: 80px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  border: 3px solid black;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #f0f0f0;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: #f0f0f0;
+  color: black;
+  transform: rotateY(180deg);
+}
+
+.stl {
+  margin-top: 180px;
+  font-size: 12px;
+}
+
+/* ###############""""" */
+/* ###############""""" */
+/* ###############""""" */
+/* ###############""""" */
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 350px;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  text-align: center;
+  border: 3px solid black;
+}
+
+.card:hover {
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .flip-card {
+    margin: auto;
+    margin-bottom: 20px;
+  }
+  .arrow-btn {
+    margin-top: 2px;
+    margin-left: 20%;
+  }
+  .arrow2-btn2 {
+    margin-left: 20%;
+    margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 769px) {
+  .flip-card {
+    /* Adjust margins for larger screens */
+    margin: auto;
+    margin-bottom: 40px; /* Example adjustment */
+  }
+  .arrow-btn {
+    margin-top: 10px; /* Example adjustment */
+    margin-left: 30%; /* Example adjustment */
+  }
+  .arrow2-btn2 {
+    margin-left: 30%; /* Example adjustment */
+    margin-bottom: 60px; /* Example adjustment */
+  }
+}
+
+@media (min-height: 870px) {
+  .flip-card {
+    margin-top: 70px;
+    height: 400px;
+  }
+  .buttons {
+    display: none;
+  }
+}
+
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+
+.contactbtn {
+  border-top: 3px solid white;
+  border-left: 3px solid black;
+  border-right: 3px solid black;
+  outline: 0;
+  display: inline-block;
+  padding: 13px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  margin-top: 17px;
+}
+
+.contactbtn:hover {
+  color: #000;
+  background-color: white;
+  border-top: 3px solid black;
+}
+
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+/*""""""""""""""""""""""""""""""""""""""""""""""""""*/
+
+.social-links a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+  margin-right: 10px;
+}
+
+.social-links a:hover {
+  color: grey;
+}
+
+
+/*########################################*/
+
+
+.arrow-btn {
+  display: flex;
+  color: black;
+  background-color: white;
+  padding: 15px 40px;
+  border-radius: 4px;
+  transition: all .3s ease;
+  font-weight: bold;
+  cursor: pointer;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 120px;
+  margin-right: 290px;
+}
+
+.arrow-btn > .arrow {
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  position: relative;
+  transform: rotate(-45deg);
+  margin: 0 6px;
+  transition: all .3s ease;
+}
+
+.arrow-btn > .arrow::before {
+  display: block;
+  background-color: currentColor;
+  width: 3px;
+  transform-origin: bottom right;
+  height: 2px;
+  position: absolute;
+  opacity: 0;
+  bottom: calc(-2px / 2);
+  transform: rotate(45deg);
+  transition: all .3s ease;
+  content: "";
+  right: 0;
+}
+
+.arrow-btn:hover > .arrow {
+  transform: rotate(-45deg) translate(4px, 4px);
+  border-color: text-hover-color;
+}
+
+.arrow-btn:hover > .arrow::before {
+  opacity: 1;
+  width: 8px;
+}
+
+.arrow-btn:hover {
+  background-color: #fff;
+  color: black;
+}
+
+/*########################################*/
+
+.arrow2-btn2 {
+  display: flex;
+  color: black;
+  background-color: white;
+  padding: 15px 50px;
+  border-radius: 4px;
+  transition: all .3s ease;
+  font-weight: bold;
+  cursor: pointer;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 60px;
+}
+
+.arrow2-btn2 > .arrow2 {
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  position: relative;
+  transform: rotate(-45deg);
+  margin: 0 6px;
+  transition: all .3s ease;
+}
+
+.arrow2-btn2 > .arrow2::before {
+  display: block;
+  background-color: currentColor;
+  width: 3px;
+  transform-origin: bottom right;
+  height: 2px;
+  position: absolute;
+  opacity: 0;
+  bottom: calc(-2px / 2);
+  transform: rotate(45deg);
+  transition: all .3s ease;
+  content: "";
+  right: 0;
+}
+
+.arrow2-btn2:hover > .arrow2 {
+  transform: rotate(-45deg) translate(4px, 4px);
+  border-color: text-hover-color;
+}
+
+.arrow2-btn2:hover > .arrow2::before {
+  opacity: 1;
+  width: 8px;
+}
+
+.arrow2-btn2:hover {
+  background-color: #fff;
+  color: black;
+}
