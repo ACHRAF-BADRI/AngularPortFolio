@@ -1,6 +1,6 @@
 # My Angular Portfolio
 
-Link : achraf-badri.github.io/AngularPortFolio/
+Link : [achraf-badri.github.io/AngularPortFolio/](https://achraf-badri.github.io/AngularPortFolio/)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
 
