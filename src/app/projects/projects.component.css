@@ -128,3 +128,26 @@
   color: black;
   border: 2px solid black;
 }
+
+/* ========== */
+
+.social-media {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.social-media a img.social-icon {
+  width: 40px;
+  height: 40px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 40px;
+  color: black;
+}
+
+a:hover {
+  color: grey;
+}
