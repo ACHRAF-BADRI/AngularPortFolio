@@ -8,7 +8,8 @@ import { Experience } from '../models/experience.model';
 })
 export class ExperienceComponent implements OnInit {
   projects: Experience[] = [
-    { title: 'Société AMUNDI', description: 'Paris, France. Stage en tant que développeur d’ANGULAR.', date: 'Juillet 2024 - Present', image: 'assets/images/AmundiPic.png'},
+    { title: 'Société EQUANS FRANCE', description: 'Paris, France. Stage en tant que développeur Full Stack.', date: 'Avril 2025 - Present', image: 'assets/images/equans_fr_logo.png'},
+    { title: 'Société AMUNDI', description: 'Paris, France. Stage en tant que développeur d’ANGULAR.', date: 'Août 2024 - Janvier 2025', image: 'assets/images/AmundiPic.png'},
     { title: 'Société ALSTOM', description: 'Fès, Maroc. Stage de fin d’étude en tant que développeur full Stack.', date: 'Juillet 2022 - Septembre 2022', image: 'assets/images/alstomPic.png'},
     { title: 'Société NEWDEV MAROC', description: 'Fès, Maroc. Stage de formation.', date: 'Juillet 2021- Août 2021', image: 'assets/images/NewDevPic.jpg'}
   ];
