@@ -13,9 +13,9 @@ export class ProjectsComponent implements OnInit {
     { title: 'Projet (Angular)', description: 'application web pour la gestion des demandes administratif pour les employés d\'ALSTOM.', image: 'assets/images/angularPic.png'},
     { title: 'Projet (.Net Core)', description: ' application web qui permet la gestion d’un établissement.', image: 'assets/images/CSharpLogo.png'},
     { title: 'Projet (ASP.Net MVC)', description: 'application web qui permet la gestion des films.', image: 'assets/images/CSharpLogo.png'},
-    { title: 'Projet POO en (C#)', description: 'permettant de réaliser un système de gestion de base de données relationnelle (SGBD).', image: 'assets/images/CSharpLogo.png'},
+    { title: 'Projet POO en (C#)', description: 'projet POO permettant de réaliser un système de gestion de base de données relationnelle (SGBD).', image: 'assets/images/CSharpLogo.png'},
     { title: 'Project (c++) et (c#)', description: 'projet Jeu d’échec avec (C++) et avec (C#/Unity).', image: 'assets/images/CSharpLogo.png'},
-    { title: 'Projet (Flutter)', description: 'réalisation d’une application mobile e-commerce.', image: 'assets/images/flutterPic.png'},
+    { title: 'Projet (Flutter)', description: 'réalisation d’une application mobile e-commerce (Amazon App clone).', image: 'assets/images/flutterPic.png'},
     { title: 'Projet (Spring Boot)', description: 'application de la gestion d’établissment.', image: 'assets/images/springPic1.png'},
   ];
 
