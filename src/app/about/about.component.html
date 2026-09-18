@@ -1,22 +1,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="about">
-  <span class="eyebrow">À propos</span>
-  <h2>About Me</h2>
+  <span class="eyebrow">{{ translation.t('about.eyebrow') }}</span>
+  <h2>{{ translation.t('about.title') }}</h2>
   <div class="about-content">
     <div class="flip-card">
       <div class="flip-card-inner">
         <div class="flip-card-front">
           <i class="fa fa-certificate cert-icon"></i>
-          <h4>Certificats</h4>
-          <div class="stl">Survolez pour voir</div>
+          <h4>{{ translation.t('about.certificates') }}</h4>
+          <div class="stl">{{ translation.t('about.hoverHint') }}</div>
         </div>
         <div class="flip-card-back">
-          <h4>Certificats</h4>
+          <h4>{{ translation.t('about.certificates') }}</h4>
           <ul class="cert-list">
-            <li><i class="fa fa-check-circle"></i> CCNA: Enterprise Networking, Security, and Automation <span>Juillet 2023</span></li>
-            <li><i class="fa fa-check-circle"></i> CCNAv7: Switching Routing and Wireless Essentials <span>Juin 2023</span></li>
-            <li><i class="fa fa-check-circle"></i> CCNAv7: Introduction to Networks <span>Novembre 2022</span></li>
-            <li><i class="fa fa-check-circle"></i> NDG Linux Essential <span>Mars 2021</span></li>
+            <li><i class="fa fa-check-circle"></i> CCNA: Enterprise Networking, Security, and Automation <span>{{ translation.t('about.cert1Date') }}</span></li>
+            <li><i class="fa fa-check-circle"></i> CCNAv7: Switching Routing and Wireless Essentials <span>{{ translation.t('about.cert2Date') }}</span></li>
+            <li><i class="fa fa-check-circle"></i> CCNAv7: Introduction to Networks <span>{{ translation.t('about.cert3Date') }}</span></li>
+            <li><i class="fa fa-check-circle"></i> NDG Linux Essential <span>{{ translation.t('about.cert4Date') }}</span></li>
           </ul>
         </div>
       </div>
@@ -27,19 +27,19 @@
         <img src="assets/images/IMG3.jpg" alt="Achraf El Badri">
       </div>
       <h3>ACHRAF EL BADRI</h3>
-      <p class="title">Full Stack Developer</p>
+      <p class="title">{{ translation.t('about.role') }}</p>
       <p class="company">Bouygues E&amp;S</p>
       <div class="social-links">
         <a href="https://www.instagram.com/achraf_badri/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
         <a href="https://www.linkedin.com/in/achraf-el-badri-769645245" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
         <a href="https://github.com/ACHRAF-BADRI" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa fa-github"></i></a>
       </div>
-      <button class="contactbtn" routerLink="/contact">Contact</button>
+      <button class="contactbtn" routerLink="/contact">{{ translation.t('about.contactBtn') }}</button>
     </div>
 
     <div class="buttons">
-      <button class="arrow-btn" routerLink="/experience">Experience<span class="arrow"></span></button>
-      <button class="arrow2-btn2" routerLink="/projects">Projects<span class="arrow2"></span></button>
+      <button class="arrow-btn" routerLink="/experience">{{ translation.t('about.experienceBtn') }}<span class="arrow"></span></button>
+      <button class="arrow2-btn2" routerLink="/projects">{{ translation.t('about.projectsBtn') }}<span class="arrow2"></span></button>
     </div>
   </div>
 </div>

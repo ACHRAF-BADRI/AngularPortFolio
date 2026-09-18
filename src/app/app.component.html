@@ -7,16 +7,35 @@
 </head>
 <body>
   <header class="header">
-    <a routerLink="/" class="logo">ACHRAF EL BADRI</a>
-    <input class="menu-btn" type="checkbox" id="menu-btn" />
-    <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+    <a routerLink="/" class="logo" (click)="closeMenu()">ACHRAF EL BADRI</a>
+    <button
+      class="menu-icon"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-label="Ouvrir le menu"
+      aria-controls="nav-menu">
+      <span class="navicon" [class.open]="isMenuOpen"></span>
+    </button>
 
-    <ul class="menu">
-      <li><a class="navbtn" routerLink="/">Home</a></li>
-      <li><a class="navbtn" routerLink="/about">About</a></li>
-      <li><a class="navbtn" routerLink="/projects">Projects</a></li>
-      <li><a class="navbtn" routerLink="/experience">Experience</a></li>
-      <li><a class="navbtn" routerLink="/contact">Contact</a></li>
+    <div class="menu-backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
+
+    <ul class="menu" id="nav-menu" [class.open]="isMenuOpen">
+      <li class="menu-title">{{ translation.t('nav.menuTitle') }}</li>
+      <li><a class="navbtn" routerLink="/" (click)="closeMenu()">{{ translation.t('nav.home') }}</a></li>
+      <li><a class="navbtn" routerLink="/about" (click)="closeMenu()">{{ translation.t('nav.about') }}</a></li>
+      <li><a class="navbtn" routerLink="/projects" (click)="closeMenu()">{{ translation.t('nav.projects') }}</a></li>
+      <li><a class="navbtn" routerLink="/experience" (click)="closeMenu()">{{ translation.t('nav.experience') }}</a></li>
+      <li><a class="navbtn" routerLink="/contact" (click)="closeMenu()">{{ translation.t('nav.contact') }}</a></li>
+      <li class="lang-toggle-item">
+        <button
+          class="lang-toggle-btn"
+          type="button"
+          (click)="toggleLang()"
+          [attr.aria-label]="translation.lang() === 'fr' ? 'Passer en anglais' : 'Switch to French'">
+          {{ translation.lang() === 'fr' ? 'FR' : 'EN' }}
+        </button>
+      </li>
       <li class="theme-toggle-item">
         <button
           class="theme-toggle-btn"

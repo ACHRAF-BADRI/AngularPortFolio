@@ -42,12 +42,22 @@
 
 html, body { height: 100%; }
 
+html {
+  /* Safety net: if any page content ever overflows horizontally, clip it
+     here instead of letting it widen the layout viewport — otherwise
+     fixed-position elements sized with width:100%/vw (the header, the
+     mobile sidebar) stretch to match that wider viewport instead of the
+     visible screen. */
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
 }
 
 body.modal-open {

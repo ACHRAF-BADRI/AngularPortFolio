@@ -71,6 +71,18 @@ mat-card {
   word-break: break-word;
 }
 
+.email-link {
+  font-size: 1.1rem;
+  word-break: break-word;
+  color: var(--accent-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.email-link:hover {
+  text-decoration: none;
+}
+
 .social-media {
   display: flex;
   justify-content: space-around;

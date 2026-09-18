@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="projects" [ngClass]="{'visible': isVisible}">
-  <h1>Projets académiques et personnels</h1>
+  <h1>{{ translation.t('projects.title') }}</h1>
   <div class="projects-container">
     <div class="project-card" *ngFor="let project of projects">
       <div class="card">
@@ -10,9 +10,9 @@
             <img [src]="project.image" alt="Project Image">
           </div>
           <div class="project-details">
-            <h2>{{ project.title }}</h2>
-            <div class="project-period" *ngIf="project.period">{{ project.period }}</div>
-            <button class="details-btn" type="button" (click)="openDetails(project)">Voir détails</button>
+            <h2>{{ translation.pick(project.title, project.titleEn) }}</h2>
+            <div class="project-period" *ngIf="project.period">{{ translation.pick(project.period, project.periodEn) }}</div>
+            <button class="details-btn" type="button" (click)="openDetails(project)">{{ translation.t('common.viewDetails') }}</button>
           </div>
         </div>
       </div>
@@ -22,10 +22,10 @@
 
 <app-detail-modal
   [isOpen]="isModalOpen"
-  [title]="selectedProject?.title || ''"
-  [subtitle]="selectedProject?.period || ''"
-  [description]="selectedProject?.description || ''"
-  [tech]="selectedProject?.tech || []"
+  [title]="translation.pick(selectedProject?.title || '', selectedProject?.titleEn)"
+  [subtitle]="translation.pick(selectedProject?.period || '', selectedProject?.periodEn)"
+  [description]="translation.pick(selectedProject?.description || '', selectedProject?.descriptionEn)"
+  [tech]="translation.pickList(selectedProject?.tech, selectedProject?.techEn)"
   (closeModal)="closeDetails()">
 </app-detail-modal>
 
@@ -33,4 +33,4 @@
   <a href="https://github.com/ACHRAF-BADRI" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" style="margin-right: 40px;"></i></a>
 </div>
 
-<button class="scroll-to-top-btn" (click)="scrollToTop()" [class.visible]="isScrollButtonVisible">Top</button>
+<button class="scroll-to-top-btn" (click)="scrollToTop()" [class.visible]="isScrollButtonVisible">{{ translation.t('common.top') }}</button>

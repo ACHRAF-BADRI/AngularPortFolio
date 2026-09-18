@@ -1,5 +1,6 @@
-import { Component, EventEmitter, HostListener, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
+import { Component, EventEmitter, HostListener, Inject, Input, Output, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-detail-modal',
@@ -7,6 +8,8 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './detail-modal.component.css'
 })
 export class DetailModalComponent {
+  translation = inject(TranslationService);
+
   @Input() title = '';
   @Input() subtitle = '';
   @Input() image = '';

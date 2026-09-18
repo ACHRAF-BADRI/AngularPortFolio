@@ -1,6 +1,6 @@
 
 <div class="projects" [ngClass]="{'visible': isVisible}">
-  <h1>Experience</h1>
+  <h1>{{ translation.t('experience.title') }}</h1>
   <div *ngFor="let project of projects" class="project-card">
     <div class="card">
       <div class="card-content">
@@ -8,9 +8,9 @@
           <img [src]="project.image" alt="Project Image">
         </div>
         <div class="project-details">
-          <h2>{{ project.title }}</h2>
-          <div class="project-date">{{ project.date }}</div>
-          <button class="details-btn" type="button" (click)="openDetails(project)">Voir détails</button>
+          <h2>{{ translation.pick(project.title, project.titleEn) }}</h2>
+          <div class="project-date">{{ translation.pick(project.date, project.dateEn) }}</div>
+          <button class="details-btn" type="button" (click)="openDetails(project)">{{ translation.t('common.viewDetails') }}</button>
         </div>
       </div>
     </div>
@@ -19,12 +19,12 @@
 
 <app-detail-modal
   [isOpen]="isModalOpen"
-  [title]="selectedExperience?.title || ''"
-  [subtitle]="selectedExperience?.date || ''"
-  [description]="selectedExperience?.description || ''"
-  [details]="selectedExperience?.details || []"
+  [title]="translation.pick(selectedExperience?.title || '', selectedExperience?.titleEn)"
+  [subtitle]="translation.pick(selectedExperience?.date || '', selectedExperience?.dateEn)"
+  [description]="translation.pick(selectedExperience?.description || '', selectedExperience?.descriptionEn)"
+  [details]="translation.pickList(selectedExperience?.details, selectedExperience?.detailsEn)"
   [tech]="selectedExperience?.tech || []"
   (closeModal)="closeDetails()">
 </app-detail-modal>
 
-<button class="scroll-to-top-btn" (click)="scrollToTop()" [class.visible]="isScrollButtonVisible">Top</button>
+<button class="scroll-to-top-btn" (click)="scrollToTop()" [class.visible]="isScrollButtonVisible">{{ translation.t('common.top') }}</button>
