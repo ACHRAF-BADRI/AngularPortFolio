@@ -30,11 +30,11 @@ export class DarkModeService {
   }
 
   private getInitialPreference(): boolean {
+    // Always default to light mode unless the user explicitly chose dark
+    // via the toggle (saved below) — ignore the OS/browser's
+    // prefers-color-scheme so a dark system setting doesn't force it.
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      return saved === 'dark';
-    }
-    return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return saved === 'dark';
   }
 
   private applyTheme(dark: boolean): void {
