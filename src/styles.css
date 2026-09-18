@@ -1,4 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f0f0;
+  --bg-card: #ffffff;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --border-color: #dddddd;
+  --accent-color: #007bff;
+  --header-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-strong: rgba(0, 0, 0, 0.3);
+  --badge-bg: #eef3ff;
+  --badge-border: #d0dcff;
+  --button-bg: #000000;
+  --button-text: #ffffff;
+  --scrollbar-thumb: #000000;
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+  --image-fill-bg: #ffffff;
+}
+
+:root.dark-theme {
+  --bg-primary: #121212;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #1e1e1e;
+  --text-primary: #f0f0f0;
+  --text-secondary: #b8b8b8;
+  --border-color: #3a3a3a;
+  --accent-color: #5aa9ff;
+  --header-bg: #1a1a1a;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --shadow-color-strong: rgba(0, 0, 0, 0.6);
+  --badge-bg: #1f2c42;
+  --badge-border: #35486b;
+  --button-bg: #f0f0f0;
+  --button-text: #121212;
+  --scrollbar-thumb: #666666;
+  --overlay-bg: rgba(0, 0, 0, 0.75);
+  --image-fill-bg: var(--bg-card);
+}
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Global scrollbar style — unscoped so it also reaches content inside
+   child components (e.g. the details modal), unlike a rule declared in a
+   component stylesheet which Angular scopes to that component only. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 6px;
+}

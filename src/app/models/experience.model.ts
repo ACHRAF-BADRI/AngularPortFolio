@@ -3,4 +3,6 @@ export interface Experience {
   description: string;
   date: string;
   image: string;
+  details?: string[];
+  tech?: string[];
 }

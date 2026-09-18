@@ -4,13 +4,17 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
   border-radius: 10px;
-  background-color: #f0f0f0;
+  background-color: var(--bg-secondary);
+  text-align: center;
 }
 
 .home h1 {
-  font-size: 2.5rem;
-  color: #333;
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+  color: var(--text-primary);
   text-align: center;
   margin-top: 120px;
 }
@@ -37,8 +41,8 @@
 }
 
 .home p {
-  font-size: 1.5rem;
-  color: #555;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: var(--text-secondary);
   margin-top: 6px;
 }
 
@@ -60,18 +64,24 @@
 
 button {
   margin-top: 20px;
-  border: 1px solid white;
+  border: 1px solid var(--bg-primary);
   padding: 13px 20px;
   font-size: 1rem;
-  background-color: black;
-  color: #fff;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   border-radius: 5px;
   cursor: pointer;
   animation: slideInFromBottom 1s ease-out forwards;
 }
 
 button:hover {
-  border: 1px solid black;
-  background-color: #fff;
-  color: black;
+  border: 1px solid var(--text-primary);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+  .home h1 {
+    margin-top: 90px;
+  }
 }

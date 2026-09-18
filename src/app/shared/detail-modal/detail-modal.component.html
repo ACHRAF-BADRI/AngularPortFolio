@@ -1,0 +1,19 @@
+<div class="modal-backdrop" *ngIf="isOpen" (click)="onBackdropClick($event)">
+  <div class="modal-box" role="dialog" aria-modal="true" [attr.aria-label]="title">
+    <div class="modal-header">
+      <h2>{{ title }}</h2>
+      <button class="modal-close" type="button" (click)="onClose()" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="modal-subtitle" *ngIf="subtitle">{{ subtitle }}</div>
+    <div class="modal-body">
+      <img *ngIf="image" [src]="image" alt="" class="modal-image">
+      <p *ngIf="description" class="modal-description">{{ description }}</p>
+      <ul class="modal-details" *ngIf="details && details.length">
+        <li *ngFor="let detail of details">{{ detail }}</li>
+      </ul>
+      <div class="modal-tech" *ngIf="tech && tech.length">
+        <span class="badge" *ngFor="let t of tech">{{ t }}</span>
+      </div>
+    </div>
+  </div>
+</div>

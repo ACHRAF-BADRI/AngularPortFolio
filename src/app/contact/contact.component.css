@@ -25,13 +25,16 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .contact h1 {
-  font-size: 50px;
-  color: #333;
+  font-size: clamp(1.8rem, 6vw, 50px);
+  color: var(--text-primary);
   margin-top: 120px;
   margin-bottom: 20px;
+  text-align: center;
   animation: slideIn 1s ease-out forwards;
 }
 
@@ -39,7 +42,10 @@ mat-card {
   width: 100%;
   max-width: 600px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 4px 8px var(--shadow-color) !important;
   animation: slideInFromBottom 1s ease-out forwards;
 }
 
@@ -57,15 +63,18 @@ mat-card {
 
 .detail mat-icon {
   margin-right: 10px;
+  color: var(--text-primary);
 }
 
 .detail span {
   font-size: 1.1rem;
+  word-break: break-word;
 }
 
 .social-media {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   margin-top: 20px;
 }
 
@@ -77,9 +86,23 @@ mat-card {
 a {
   text-decoration: none;
   font-size: 40px;
-  color: black;
+  color: var(--text-primary);
 }
 
 a:hover {
-  color: grey;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+  .contact h1 {
+    margin-top: 90px;
+  }
+
+  mat-card {
+    padding: 16px;
+  }
+
+  a {
+    font-size: 32px;
+  }
 }

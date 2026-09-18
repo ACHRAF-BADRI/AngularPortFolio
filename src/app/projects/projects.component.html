@@ -6,12 +6,13 @@
     <div class="project-card" *ngFor="let project of projects">
       <div class="card">
         <div class="card-content">
-          <div class="project-image">
+          <div class="project-image" [class.contain]="project.imageFit === 'contain'">
             <img [src]="project.image" alt="Project Image">
           </div>
           <div class="project-details">
             <h2>{{ project.title }}</h2>
-            <p>{{ project.description }}</p>
+            <div class="project-period" *ngIf="project.period">{{ project.period }}</div>
+            <button class="details-btn" type="button" (click)="openDetails(project)">Voir détails</button>
           </div>
         </div>
       </div>
@@ -19,8 +20,17 @@
   </div>
 </div>
 
+<app-detail-modal
+  [isOpen]="isModalOpen"
+  [title]="selectedProject?.title || ''"
+  [subtitle]="selectedProject?.period || ''"
+  [description]="selectedProject?.description || ''"
+  [tech]="selectedProject?.tech || []"
+  (closeModal)="closeDetails()">
+</app-detail-modal>
+
 <div class="social-media">
-  <a href="https://github.com/ACHRAF-BADRI"><i class="fa fa-github" style="margin-right: 40px;"></i></a>
+  <a href="https://github.com/ACHRAF-BADRI" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" style="margin-right: 40px;"></i></a>
 </div>
 
 <button class="scroll-to-top-btn" (click)="scrollToTop()" [class.visible]="isScrollButtonVisible">Top</button>

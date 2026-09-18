@@ -1,5 +1,5 @@
 .projects {
-  padding: 50px 0;
+  padding: 50px 16px;
   text-align: center;
   opacity: 0;
   transform: translateX(-100%);
@@ -13,86 +13,191 @@
 
 .projects h1 {
   font-size: 2rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 20px;
   margin-top: 50px;
 }
 
 .projects-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
 }
 
 .project-card {
-  flex: 1 1 calc(50% - 20px); /* Two cards per row with some spacing */
   box-sizing: border-box;
-  margin: 10px; /* Margin between cards */
+  min-width: 0;
 }
 
 .card {
   align-items: center;
   padding: 20px;
-  border: 1px solid #ddd;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  transition: box-shadow 0.3s ease, background-color 0.25s ease, border-color 0.25s ease;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px var(--shadow-color-strong);
 }
 
 .card-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .project-image {
-  flex: 0 0 150px; /* Fixed width of the image container */
-  height: 150px; /* Fixed height of the image container */
+  flex: 0 0 200px;
+  height: 200px;
   margin-right: 20px;
-  overflow: hidden; /* Hide any overflow */
+  overflow: hidden;
 }
 
 .project-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure the image covers the container */
-  border-radius: 8px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* Wide/rectangular company logos shouldn't be cropped by "cover" —
+   show them a bit bigger, whole, on a neutral background instead.
+   Since "contain" leaves transparent letterbox space around the logo,
+   the container itself needs the radius too, otherwise its square
+   corners show through where the image doesn't reach. */
+.project-image.contain {
+  flex-basis: 220px;
+  height: 220px;
+  background-color: var(--image-fill-bg);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.project-image.contain img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
 }
 
 .project-details {
   flex: 1;
+  min-width: 0;
 }
 
 .card h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #333;
+  color: var(--text-primary);
+  word-wrap: break-word;
 }
 
 .card p {
   font-size: 1.1rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
-.card a {
-  display: inline-block;
-  margin-top: 10px;
-  color: #007bff;
-  text-decoration: none;
+.project-period {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-bottom: 10px;
 }
 
-.card a:hover {
-  text-decoration: underline;
+.details-btn {
+  border: 1px solid var(--text-primary);
+  outline: 0;
+  padding: 9px 18px;
+  color: var(--button-text);
+  background-color: var(--button-bg);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.details-btn:hover {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
 }
 
 /* Responsive styles */
-@media (max-width: 768px) {
-  .project-card {
-    flex: 1 1 100%; /* Single column layout on smaller screens */
-    margin: 10px 0;
+@media (max-width: 900px) {
+  .projects-container {
+    gap: 18px;
+  }
+
+  .project-image {
+    flex-basis: 150px;
+    height: 150px;
+    margin-right: 14px;
+  }
+
+  .project-image.contain {
+    flex-basis: 170px;
+    height: 170px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .projects-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects {
+    padding: 30px 12px;
+  }
+
+  .projects h1 {
+    font-size: 1.6rem;
+    margin-top: 30px;
+  }
+
+  .card-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .project-image {
+    flex: 0 0 auto;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 14px;
+  }
+
+  .project-image.contain {
+    width: 180px;
+    height: 180px;
+  }
+
+  .project-details {
+    width: 100%;
+  }
+
+  .card h2 {
+    font-size: 1.25rem;
+  }
+
+  .details-btn {
+    width: 100%;
   }
 }
 
@@ -108,9 +213,9 @@
   display: none;
   padding: 10px 20px;
   font-size: 16px;
-  color: white;
-  background-color: black;
-  border: 2px solid white;
+  color: var(--button-text);
+  background-color: var(--button-bg);
+  border: 2px solid var(--bg-primary);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, opacity 0.3s;
@@ -124,9 +229,9 @@
 }
 
 .scroll-to-top-btn:hover {
-  background-color: white;
-  color: black;
-  border: 2px solid black;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 2px solid var(--text-primary);
 }
 
 /* ========== */
@@ -145,9 +250,9 @@
 a {
   text-decoration: none;
   font-size: 40px;
-  color: black;
+  color: var(--text-primary);
 }
 
 a:hover {
-  color: grey;
+  color: var(--text-secondary);
 }
