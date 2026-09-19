@@ -16,6 +16,8 @@ export class DetailModalComponent {
   @Input() description = '';
   @Input() details: string[] = [];
   @Input() tech: string[] = [];
+  @Input() link = '';
+  @Input() githubLink = '';
   @Output() closeModal = new EventEmitter<void>();
 
   private isBrowser: boolean;

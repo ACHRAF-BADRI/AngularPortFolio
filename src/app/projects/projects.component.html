@@ -25,7 +25,10 @@
   [title]="translation.pick(selectedProject?.title || '', selectedProject?.titleEn)"
   [subtitle]="translation.pick(selectedProject?.period || '', selectedProject?.periodEn)"
   [description]="translation.pick(selectedProject?.description || '', selectedProject?.descriptionEn)"
+  [details]="translation.pickList(selectedProject?.details, selectedProject?.detailsEn)"
   [tech]="translation.pickList(selectedProject?.tech, selectedProject?.techEn)"
+  [link]="selectedProject?.link || ''"
+  [githubLink]="selectedProject?.githubLink || ''"
   (closeModal)="closeDetails()">
 </app-detail-modal>
 

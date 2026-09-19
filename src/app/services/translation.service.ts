@@ -35,6 +35,8 @@ const DICTIONARY: Record<string, Record<Lang, string>> = {
   'common.viewDetails': { fr: 'Voir détails', en: 'View details' },
   'common.top': { fr: 'Haut', en: 'Top' },
   'common.close': { fr: 'Fermer', en: 'Close' },
+  'common.liveDemo': { fr: 'Voir la démo en ligne', en: 'View live demo' },
+  'common.sourceCode': { fr: 'Code source (GitHub)', en: 'Source code (GitHub)' },
 };
 
 @Injectable({

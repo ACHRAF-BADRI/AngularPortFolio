@@ -44,13 +44,34 @@ export class ProjectsComponent implements OnInit {
     {
       title: 'Suivi d\'entraînement sportif assisté par IA',
       titleEn: 'AI-Assisted Fitness Tracking',
-      description: 'Projet personnel : application de suivi d\'entraînement sportif intégrant des recommandations générées par IA pour proposer des plans d\'entraînement adaptatifs.',
-      descriptionEn: 'Personal project: a fitness tracking application integrating AI-generated recommendations to suggest adaptive training plans.',
+      description: 'Vertex AI Coach : plateforme de coaching sportif propulsée par l\'IA, coach de musculation (programme, nutrition, compléments), coach de course à pied (journal d\'entraînement, plans adaptatifs) et compteur de pas GPS.',
+      descriptionEn: 'Vertex AI Coach: an AI-powered fitness coaching platform, a gym coach (workout program, nutrition, supplements), a running coach (training log, adaptive training plans) and a GPS step counter.',
+      details: [
+        'Coach de musculation : programme hebdomadaire généré par IA (split d\'entraînement, nutrition, compléments) selon l\'objectif, le niveau et l\'équipement, avec une estimation du délai pour voir des résultats.',
+        'Images des exercices (wger.de) avec visionneuse zoomable et lien vidéo YouTube par exercice ; remplacement d\'un exercice ou d\'un complément par une alternative suggérée par l\'IA.',
+        'Sauvegarde des programmes sous un nom (3 emplacements par défaut, ajustables par un admin) et envoi d\'un programme à un autre utilisateur par e-mail, avec boîte de réception pour l\'accepter ou le refuser.',
+        'Coach de course à pied : journal d\'entraînement (CRUD) avec calories et pas estimés, plans d\'entraînement adaptatifs générés par IA, tableau de bord du volume hebdomadaire et de l\'allure.',
+        'Compteur de pas GPS : suivi en direct (démarrer, pause, reprendre, terminer) avec distance, pas et calories estimés, aperçu du parcours, historique des sessions et graphiques.',
+        'Authentification JWT avec rôles utilisateur/admin, suspension de compte et édition du profil ; panneau d\'administration (gestion des utilisateurs, statistiques, vues par utilisateur).',
+        'Interface français/anglais avec contenu généré par l\'IA traduit à la volée, responsive et mode sombre.',
+        'Monorepo : API Flask déployée sur Render (Docker + gunicorn) et application React + TypeScript déployée sur Netlify, avec déploiement continu à chaque push GitHub.'
+      ],
+      detailsEn: [
+        'Gym coach: AI-generated weekly program (workout split, nutrition, supplements) based on goal, level and equipment, with an estimate of the time needed to see results.',
+        'Exercise images (wger.de) with a zoomable viewer and a YouTube video link per exercise; swap any exercise or supplement for an AI-suggested alternative.',
+        'Save programs under a name (3 slots by default, adjustable by an admin) and send a program to another user by email, with an inbox to accept or decline it.',
+        'Running coach: training log (CRUD) with derived calories and estimated steps, AI-generated adaptive training plans, and a dashboard with weekly volume and pace charts.',
+        'GPS step counter: live tracking (start, pause, resume, finish) with distance, estimated steps and calories, a route preview, session history and charts.',
+        'JWT authentication with user and admin roles, account suspension and profile editing; admin panel (user management, statistics, per-user views).',
+        'French / English interface with AI-generated content translated on the fly, responsive layout and dark mode.',
+        'Monorepo: Flask API deployed on Render (Docker + gunicorn) and React + TypeScript app deployed on Netlify, with continuous deployment on every GitHub push.'
+      ],
       image: 'assets/images/python.webp',
-      tech: ['IA générative', 'API IA (OpenAI/Claude)'],
-      techEn: ['Generative AI', 'AI API (OpenAI/Claude)'],
+      tech: ['Python (Flask)', 'React', 'TypeScript', 'Tailwind CSS', 'MongoDB Atlas', 'Groq API', 'JWT', 'Docker', 'Render', 'Netlify'],
       period: 'Projet personnel',
-      periodEn: 'Personal project'
+      periodEn: 'Personal project',
+      link: 'https://vertex-coach.netlify.app',
+      githubLink: 'https://github.com/ACHRAF-BADRI/Vertex-AI-Coach'
     },
     {
       title: 'Projet (React)',

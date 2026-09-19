@@ -110,6 +110,25 @@
   font-size: 0.95rem;
 }
 
+.modal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 14px;
+}
+
+.modal-link {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+.modal-link:hover {
+  text-decoration: none;
+}
+
 .modal-tech {
   display: flex;
   flex-wrap: wrap;

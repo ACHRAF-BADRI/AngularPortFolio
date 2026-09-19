@@ -50,7 +50,7 @@ export class ExperienceComponent implements OnInit {
       descriptionEn: 'Paris, France. Full-Stack Developer (graduate internship).',
       date: 'Avril 2025 - Novembre 2025',
       dateEn: 'April 2025 - November 2025',
-      image: 'assets/images/equans_fr_logo2.png',
+      image: 'assets/images/equans_fr_logo.png',
       tech: ['Spring Boot', 'Python', 'Kafka', 'Docker', 'InfluxDB', 'MongoDB'],
       details: [
         'Conception et développement de microservices Spring Boot pour la gestion des trames Uplink/Downlink LoRa via un LNS avec Apache Kafka.',

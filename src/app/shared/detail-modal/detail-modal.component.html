@@ -11,6 +11,10 @@
       <ul class="modal-details" *ngIf="details && details.length">
         <li *ngFor="let detail of details">{{ detail }}</li>
       </ul>
+      <div class="modal-links" *ngIf="link || githubLink">
+        <a class="modal-link" *ngIf="link" [href]="link" target="_blank" rel="noopener noreferrer">{{ translation.t('common.liveDemo') }} ↗</a>
+        <a class="modal-link" *ngIf="githubLink" [href]="githubLink" target="_blank" rel="noopener noreferrer">{{ translation.t('common.sourceCode') }} ↗</a>
+      </div>
       <div class="modal-tech" *ngIf="tech && tech.length">
         <span class="badge" *ngFor="let t of tech">{{ t }}</span>
       </div>
