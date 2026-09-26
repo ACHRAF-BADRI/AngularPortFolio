@@ -1,5 +1,6 @@
 <div class="home">
   <h1 class="slide-in">{{ translation.t('home.greeting') }}</h1>
   <p>{{ translation.t('home.role') }}</p>
-  <a href="assets/documents/EL_BADRI_ACHRAF_CV.pdf" download (click)="notifyDownload()"><button>{{ translation.t('home.download') }}</button></a>
+  <!-- The CV is attached to the GitHub release tagged "cv": replace the PDF there (same file name) to update it -->
+  <a href="https://github.com/ACHRAF-BADRI/AngularPortFolio/releases/download/cv/EL_BADRI_ACHRAF_CV.pdf" download (click)="notifyDownload()"><button>{{ translation.t('home.download') }}</button></a>
 </div>
