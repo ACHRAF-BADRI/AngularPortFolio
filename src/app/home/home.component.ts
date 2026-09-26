@@ -1,10 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TranslationService } from '../services/translation.service';
 import { VisitService } from '../services/visit.service';
-
-// API server on Render (api/ folder): each click on the download button is emailed to the owner.
-// Leave empty to disable. Example: "https://portfolio-api.onrender.com"
-const API_URL = 'https://portfolio-api-yinb.onrender.com';
+import { API_URL } from '../api';
 
 @Component({
   selector: 'app-home',

@@ -31,6 +31,17 @@ const DICTIONARY: Record<string, Record<Lang, string>> = {
   'experience.title': { fr: 'Expérience', en: 'Experience' },
 
   'contact.title': { fr: 'Me Contacter', en: 'Contact Me' },
+  'contact.formTitle': { fr: 'Envoyer un message', en: 'Send a message' },
+  'contact.name': { fr: 'Nom', en: 'Name' },
+  'contact.email': { fr: 'Email', en: 'Email' },
+  'contact.message': { fr: 'Message', en: 'Message' },
+  'contact.send': { fr: 'Envoyer', en: 'Send' },
+  'contact.sending': { fr: 'Envoi en cours…', en: 'Sending…' },
+  'contact.slow': { fr: 'Le serveur se réveille, cela peut prendre jusqu’à une minute.', en: 'The server is waking up, this can take up to a minute.' },
+  'contact.success': { fr: 'Merci ! Votre message a bien été envoyé, je vous répondrai rapidement.', en: 'Thank you! Your message has been sent, I will get back to you soon.' },
+  'contact.invalid': { fr: 'Vérifiez les champs : nom, email valide et message sont obligatoires.', en: 'Please check the fields: name, a valid email and a message are required.' },
+  'contact.tooMany': { fr: 'Trop de messages envoyés. Réessayez dans quelques minutes.', en: 'Too many messages sent. Please try again in a few minutes.' },
+  'contact.error': { fr: 'Le message n’a pas pu être envoyé. Réessayez ou écrivez-moi directement par email.', en: 'The message could not be sent. Please try again or email me directly.' },
 
   'common.viewDetails': { fr: 'Voir détails', en: 'View details' },
   'common.top': { fr: 'Haut', en: 'Top' },

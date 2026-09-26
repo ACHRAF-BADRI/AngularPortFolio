@@ -22,4 +22,40 @@
       <a href="https://www.instagram.com/achraf_badri/" target="_blank" rel="noopener noreferrer"><i class="fa fa-instagram"></i></a>
     </div>
   </mat-card>
+
+  <mat-card class="form-card">
+    <h2>{{ translation.t('contact.formTitle') }}</h2>
+    <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)" novalidate>
+      <!-- Honeypot: invisible to people, bots fill it in and get silently ignored -->
+      <label class="honeypot" aria-hidden="true">
+        Website <input name="website" [(ngModel)]="contact.website" tabindex="-1" autocomplete="off">
+      </label>
+
+      <label class="field">
+        <span>{{ translation.t('contact.name') }}</span>
+        <input name="name" [(ngModel)]="contact.name" required maxlength="100" autocomplete="name">
+      </label>
+      <label class="field">
+        <span>{{ translation.t('contact.email') }}</span>
+        <input name="email" type="email" [(ngModel)]="contact.email" required email maxlength="254" autocomplete="email">
+      </label>
+      <label class="field">
+        <span>{{ translation.t('contact.message') }}</span>
+        <textarea name="message" [(ngModel)]="contact.message" required maxlength="5000" rows="6"></textarea>
+      </label>
+
+      <button type="submit" [disabled]="status() === 'sending'">
+        {{ translation.t(status() === 'sending' ? 'contact.sending' : 'contact.send') }}
+      </button>
+
+      @if (slow()) {
+        <p class="form-note">{{ translation.t('contact.slow') }}</p>
+      }
+      @if (status() !== 'idle' && status() !== 'sending') {
+        <p class="form-status" [class.success]="status() === 'success'" role="status">
+          {{ translation.t('contact.' + status()) }}
+        </p>
+      }
+    </form>
+  </mat-card>
 </div>

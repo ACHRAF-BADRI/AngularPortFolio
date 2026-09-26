@@ -1,4 +1,5 @@
-// Portfolio API (Render): counts each CV download in MongoDB and emails the owner through Resend.
+// Portfolio API (Render): counts each CV download in MongoDB and emails the owner through Resend,
+// and sends the messages of the contact form.
 // Run locally:  npm run dev   (from the api/ folder, reads ../.env)
 import { createHash, randomBytes } from 'node:crypto';
 import { createServer } from 'node:http';
@@ -12,18 +13,31 @@ const MAX_RECORDS_PER_HOUR = 300;
 // survives restarts, so the limits above keep working after the free Render server wakes up.
 const SALT = process.env.RESEND_API_KEY || randomBytes(16).toString('hex');
 
-// Every download is stored here (collection "downloads"). Without MONGODB_URI, or while the database
-// is unreachable, the server still emails, with in-memory limits and no counter.
+const MAX_MESSAGES_PER_VISITOR = 5;     // contact form: per visitor, every 15 min
+const MAX_MESSAGES_PER_HOUR = 30;       // contact form: all visitors together
+const CONTACT_LIMITS = { name: 100, email: 254, message: 5000 };
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Sites allowed to call the contact form from a browser (the GitHub Pages site and `ng serve`)
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://achraf-badri.github.io,http://localhost:4200')
+  .split(',').map((o) => o.trim());
+
+// Every download and message is stored here (collections "downloads" and "messages"). Without MONGODB_URI,
+// or while the database is unreachable, the server still emails, with in-memory limits and no counter.
 let downloads = null;
+let messages = null;
 if (process.env.MONGODB_URI) {
-  downloads = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 8000 })
-    .db(process.env.MONGODB_DB || 'portfolio').collection('downloads');
-  Promise.all([downloads.createIndex({ at: -1 }), downloads.createIndex({ visitor: 1, at: -1 })])
+  const db = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 8000 })
+    .db(process.env.MONGODB_DB || 'portfolio');
+  downloads = db.collection('downloads');
+  messages = db.collection('messages');
+  Promise.all([downloads.createIndex({ at: -1 }), downloads.createIndex({ visitor: 1, at: -1 }),
+    messages.createIndex({ at: -1 }), messages.createIndex({ visitor: 1, at: -1 })])
     .catch((e) => console.error('MongoDB:', e.message));
 }
 
 const lastEmailByVisitor = new Map();   // in-memory fallback: visitor -> time of their last email
 let emailTimes = [];                    // in-memory fallback: times of the emails sent in the last hour
+let messageLog = [];                    // in-memory fallback: [visitor, time] of the recent contact messages
 
 function clientIp(req) {
   return (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
@@ -122,7 +136,7 @@ function downloadEmail(info, total) {
 }
 
 /** Returns true if Resend accepted the email; never throws (a failed email must not break a request). */
-async function sendEmail(subject, html) {
+async function sendEmail(subject, html, { text, replyTo } = {}) {
   const key = process.env.RESEND_API_KEY;
   const to = process.env.NOTIFY_EMAIL;
   if (!key || !to) return false;
@@ -130,7 +144,10 @@ async function sendEmail(subject, html) {
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: process.env.RESEND_FROM || 'Achraf Portfolio <onboarding@resend.dev>', to: [to], subject, html }),
+      body: JSON.stringify({
+        from: process.env.RESEND_FROM || 'Achraf Portfolio <onboarding@resend.dev>', to: [to], subject, html, text,
+        reply_to: replyTo, // "Reply" in the mailbox answers the visitor directly
+      }),
       signal: AbortSignal.timeout(15_000),
     });
     if (!res.ok) console.error('Resend error:', res.status, (await res.text()).slice(0, 200));
@@ -141,11 +158,11 @@ async function sendEmail(subject, html) {
   }
 }
 
-async function readJson(req) {
+async function readJson(req, maxLength = 4000) {
   let body = '';
   for await (const chunk of req) {
     body += chunk;
-    if (body.length > 4000) break;
+    if (body.length > maxLength) return {};
   }
   try {
     const data = JSON.parse(body || '{}');
@@ -207,8 +224,99 @@ async function trackDownload(req, res) {
   }
 }
 
+// ---------------------------------------------------------------- Contact form
+
+function contactEmail({ name, email, message }) {
+  const date = localTime();
+  const subject = `[Portfolio] Nouveau message de ${name}`;
+  const text = ['Nouveau message depuis le formulaire de contact de ton portfolio.', '',
+    `Nom : ${name}`, `Email : ${email}`, `Date : ${date}`, '', 'Message :', message, '',
+    `Réponds directement à cet email pour écrire à ${name}.`].join('\n');
+  const html = `
+    <div style="font-family:Segoe UI,Arial,sans-serif;max-width:560px;margin:auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
+      <div style="padding:18px 24px;background:#1d4ed8;color:#ffffff">
+        <div style="font-size:13px;opacity:.9">Achraf Portfolio · Formulaire de contact</div>
+        <div style="font-size:20px;font-weight:bold;margin-top:4px">Nouveau message de ${escapeHtml(name)}</div>
+      </div>
+      <div style="padding:24px">
+        <table style="font-size:14px;border-collapse:collapse">
+          <tr><td style="padding:4px 12px 4px 0;color:#6b7280">Nom</td><td style="padding:4px 0"><b>${escapeHtml(name)}</b></td></tr>
+          <tr><td style="padding:4px 12px 4px 0;color:#6b7280">Email</td><td style="padding:4px 0"><a href="mailto:${escapeHtml(email)}" style="color:#1d4ed8">${escapeHtml(email)}</a></td></tr>
+          <tr><td style="padding:4px 12px 4px 0;color:#6b7280">Date</td><td style="padding:4px 0">${escapeHtml(date)}</td></tr>
+        </table>
+        <div style="margin-top:20px;padding:16px;background:#f8fafc;border-left:4px solid #1d4ed8;border-radius:8px;font-size:15px;line-height:1.6;white-space:pre-wrap">${escapeHtml(message)}</div>
+        <p style="margin:20px 0 0;font-size:13px;color:#6b7280">Réponds directement à cet email pour écrire à ${escapeHtml(name)}.</p>
+      </div>
+    </div>`;
+  return { subject, text, html };
+}
+
+async function contactAllowed(visitor) {
+  const since = (minutes) => ({ $gte: new Date(Date.now() - minutes * 60_000) });
+  if (messages) {
+    try {
+      return await messages.countDocuments({ visitor, at: since(15) }) < MAX_MESSAGES_PER_VISITOR
+        && await messages.countDocuments({ at: since(60) }) < MAX_MESSAGES_PER_HOUR;
+    } catch (e) {
+      console.error('MongoDB unavailable:', e.message);
+    }
+  }
+  const now = Date.now();
+  messageLog = messageLog.filter(([, t]) => now - t < 3600_000);
+  if (messageLog.filter(([v, t]) => v === visitor && now - t < 15 * 60_000).length >= MAX_MESSAGES_PER_VISITOR
+      || messageLog.length >= MAX_MESSAGES_PER_HOUR) return false;
+  messageLog.push([visitor, now]);
+  return true;
+}
+
+const sendJson = (res, status, body) =>
+  res.writeHead(status, { 'Content-Type': 'application/json' }).end(JSON.stringify(body));
+
+/** Called by the contact page: validates the message and emails it to the owner. */
+async function contact(req, res) {
+  const body = await readJson(req, 20_000);
+  const clean = (value) => (typeof value === 'string' ? value.trim() : '');
+  const data = { name: clean(body.name).replace(/[\r\n]+/g, ' '), email: clean(body.email), message: clean(body.message) };
+  const invalid = [
+    (!data.name || data.name.length > CONTACT_LIMITS.name) && 'name',
+    (!EMAIL_RE.test(data.email) || data.email.length > CONTACT_LIMITS.email) && 'email',
+    (!data.message || data.message.length > CONTACT_LIMITS.message) && 'message',
+  ].filter(Boolean);
+  if (invalid.length) return sendJson(res, 400, { error: 'invalid', fields: invalid });
+  if (clean(body.website)) return sendJson(res, 200, { ok: true }); // honeypot filled: a bot, fake success
+
+  const visitor = visitorId(req);
+  if (!(await contactAllowed(visitor))) return sendJson(res, 429, { error: 'too_many' });
+  const { subject, text, html } = contactEmail(data);
+  const emailed = await sendEmail(subject, html, { text, replyTo: data.email });
+  if (messages) {
+    // Kept as a backup, so a message is never lost even if the email failed
+    await messages.insertOne({ at: new Date(), visitor, ...data, lang: clean(body.lang).slice(0, 5), emailed })
+      .catch((e) => console.error('MongoDB unavailable:', e.message));
+  }
+  sendJson(res, emailed ? 200 : 502, emailed ? { ok: true } : { error: 'send_failed' });
+}
+
+/** Lets the allowed sites read the answers of this server from a browser. */
+function allowCors(req, res) {
+  const origin = req.headers.origin;
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Max-Age', '86400');
+  }
+}
+
 createServer((req, res) => {
   const path = (req.url || '/').split('?')[0];
+  allowCors(req, res);
+  if (req.method === 'OPTIONS') return void res.writeHead(204).end();
+  if (req.method === 'POST' && path === '/contact') return void contact(req, res).catch((e) => {
+    console.error('Contact error:', e);
+    if (!res.headersSent) sendJson(res, 500, { error: 'server_error' });
+  });
   if (req.method === 'POST' && path === '/track/download') return void trackDownload(req, res);
   if (req.method === 'GET' && path === '/health') return void res.writeHead(200, { 'Content-Type': 'application/json' }).end('{"status":"ok"}');
   res.writeHead(404).end();
