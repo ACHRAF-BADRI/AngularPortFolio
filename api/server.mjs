@@ -1,18 +1,61 @@
-// Portfolio API (Render): emails the owner through Resend each time the CV is downloaded.
-// Run locally:  node --env-file=../.env server.mjs   (from the api/ folder)
+// Portfolio API (Render): counts each CV download in MongoDB and emails the owner through Resend.
+// Run locally:  npm run dev   (from the api/ folder, reads ../.env)
 import { createHash, randomBytes } from 'node:crypto';
 import { createServer } from 'node:http';
+import { MongoClient } from 'mongodb';
 
-const EMAIL_EVERY_VISITOR_MINUTES = 10; // the same visitor clicking again within 10 min is not emailed again
+const EMAIL_EVERY_VISITOR_MINUTES = 10; // the same visitor clicking again within 10 min is counted, not emailed
 const MAX_EMAILS_PER_HOUR = 20;         // protects the mailbox (and the Resend quota) against spam clicks
-const SALT = randomBytes(16);           // visitors are only kept in memory, as salted hashes of their IP
+const MAX_RECORDS_PER_VISITOR_HOUR = 5; // beyond that, clicks from the same visitor are ignored (no database flood)
+const MAX_RECORDS_PER_HOUR = 300;
+// Visitors are identified by a salted hash of their IP, never the IP itself. The salt is a secret that
+// survives restarts, so the limits above keep working after the free Render server wakes up.
+const SALT = process.env.RESEND_API_KEY || randomBytes(16).toString('hex');
 
-const lastEmailByVisitor = new Map();   // visitor -> time of their last email
-let emailTimes = [];                    // times of the emails sent in the last hour
+// Every download is stored here (collection "downloads"). Without MONGODB_URI, or while the database
+// is unreachable, the server still emails, with in-memory limits and no counter.
+let downloads = null;
+if (process.env.MONGODB_URI) {
+  downloads = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 8000 })
+    .db(process.env.MONGODB_DB || 'portfolio').collection('downloads');
+  Promise.all([downloads.createIndex({ at: -1 }), downloads.createIndex({ visitor: 1, at: -1 })])
+    .catch((e) => console.error('MongoDB:', e.message));
+}
+
+const lastEmailByVisitor = new Map();   // in-memory fallback: visitor -> time of their last email
+let emailTimes = [];                    // in-memory fallback: times of the emails sent in the last hour
+
+function clientIp(req) {
+  return (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+}
 
 function visitorId(req) {
-  const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
-  return createHash('sha256').update(SALT).update(ip).digest('hex').slice(0, 16);
+  return createHash('sha256').update(SALT).update(clientIp(req)).digest('hex').slice(0, 16);
+}
+
+/** Approximate location from the IP (https://ipwho.is, no key needed). The IP is only used for this
+ *  lookup, never stored. Returns empty values on any failure: a missing location must not block the email. */
+async function locate(ip) {
+  const none = { place: '', network: '' };
+  if (!ip || /^(127\.|10\.|192\.168\.|::1$|::ffff:127\.)/.test(ip)) return none;
+  try {
+    const res = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}?fields=success,country,region,city,connection`,
+      { signal: AbortSignal.timeout(4000) });
+    const d = await res.json();
+    if (!d.success) return none;
+    return {
+      place: [...new Set([d.country, d.region, d.city].filter(Boolean))].join(' · '),
+      network: d.connection?.org || d.connection?.isp || '',
+    };
+  } catch {
+    return none;
+  }
+}
+
+function duration(seconds) {
+  const s = Number(seconds);
+  if (!Number.isFinite(s) || s < 0) return '';
+  return s < 60 ? `${Math.round(s)} s` : `${Math.floor(s / 60)} min ${Math.round(s % 60)} s`;
 }
 
 function shouldEmail(visitor) {
@@ -25,6 +68,25 @@ function shouldEmail(visitor) {
   lastEmailByVisitor.set(visitor, now);
   emailTimes.push(now);
   return true;
+}
+
+/** What to do with a click: store it in the database, email it, or both (spam: neither). */
+async function decide(visitor) {
+  if (downloads) {
+    try {
+      const since = (minutes) => ({ $gte: new Date(Date.now() - minutes * 60_000) });
+      if (await downloads.countDocuments({ visitor, at: since(60) }) >= MAX_RECORDS_PER_VISITOR_HOUR
+          || await downloads.countDocuments({ at: since(60) }) >= MAX_RECORDS_PER_HOUR) {
+        return { record: false, email: false };
+      }
+      const email = await downloads.countDocuments({ visitor, at: since(EMAIL_EVERY_VISITOR_MINUTES) }) === 0
+        && await downloads.countDocuments({ emailed: true, at: since(60) }) < MAX_EMAILS_PER_HOUR;
+      return { record: true, email };
+    } catch (e) {
+      console.error('MongoDB unavailable:', e.message);
+    }
+  }
+  return { record: false, email: shouldEmail(visitor) };
 }
 
 function describeAgent(ua) {
@@ -46,7 +108,7 @@ function localTime() {
 
 const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
-function downloadEmail(info) {
+function downloadEmail(info, total) {
   const rows = Object.entries(info).filter(([, value]) => value).map(([label, value]) =>
     `<tr><td style="padding:4px 12px 4px 0;color:#6b7280">${escapeHtml(label)}</td>` +
     `<td style="padding:4px 0"><b>${escapeHtml(value)}</b></td></tr>`).join('');
@@ -54,7 +116,8 @@ function downloadEmail(info) {
     <div style="font-family:Segoe UI,Arial,sans-serif;max-width:520px;margin:auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px">
       <h2 style="margin:0 0 4px;color:#1d4ed8">Ton CV a été téléchargé</h2>
       <p style="margin:0 0 16px;color:#374151">Quelqu'un vient de cliquer sur « Télécharger le CV » sur ton portfolio.</p>
-      <table style="font-size:14px;border-collapse:collapse">${rows}</table>
+      <table style="font-size:14px;border-collapse:collapse">${rows}</table>${total ? `
+      <p style="margin:20px 0 0;font-size:15px">Total des téléchargements : <b>${total}</b></p>` : ''}
     </div>`;
 }
 
@@ -82,7 +145,7 @@ async function readJson(req) {
   let body = '';
   for await (const chunk of req) {
     body += chunk;
-    if (body.length > 2000) break;
+    if (body.length > 4000) break;
   }
   try {
     const data = JSON.parse(body || '{}');
@@ -97,17 +160,49 @@ async function trackDownload(req, res) {
   const data = await readJson(req);
   res.writeHead(204).end(); // the visitor never waits for the email
   const visitor = visitorId(req);
-  if (!shouldEmail(visitor)) return;
+  const { record, email } = await decide(visitor);
+  if (!record && !email) return;
   const ua = String(req.headers['user-agent'] || '').slice(0, 300);
+  const text = (value, max = 200) => String(value ?? '').slice(0, max);
+  const { place, network } = await locate(clientIp(req));
+  const doc = {
+    at: new Date(), visitor, emailed: email, place, network,
+    timezone: text(data.timezone, 60), source: text(data.source, 60), referrer: text(data.referrer),
+    pages: text(data.pages, 400), seconds: Number(data.seconds) || 0,
+    device: text(data.device, 10), screen: text(data.screen, 20), system: describeAgent(ua),
+    lang: text(data.lang, 5), browserLang: String(req.headers['accept-language'] || '').split(',')[0].slice(0, 20),
+  };
+  let total = 0;
+  if (record) {
+    try {
+      await downloads.insertOne(doc);
+      total = await downloads.countDocuments({});
+    } catch (e) {
+      console.error('MongoDB unavailable:', e.message);
+    }
+  }
+  if (!email) return;
   const info = {
     'Date': localTime(),
-    'Système · navigateur': describeAgent(ua),
-    'Langue du site': String(data.lang || '').slice(0, 5).toUpperCase() || '—',
-    'Langue du navigateur': String(req.headers['accept-language'] || '').split(',')[0],
-    'Page': String(req.headers['referer'] || '').slice(0, 200),
+    'Lieu (approx.)': doc.place,
+    'Réseau': doc.network,
+    'Fuseau horaire': doc.timezone,
+    'Lien suivi (?src=)': doc.source,
+    'Venu de': doc.referrer || 'accès direct',
+    'Pages vues': doc.pages,
+    'Temps sur le site': duration(data.seconds),
+    'Appareil': [doc.device, doc.screen].filter(Boolean).join(' · '),
+    'Système · navigateur': doc.system,
+    'Langue du site': doc.lang.toUpperCase() || '—',
+    'Langue du navigateur': doc.browserLang,
   };
-  if (!(await sendEmail('CV téléchargé depuis ton portfolio', downloadEmail(info)))) {
-    lastEmailByVisitor.delete(visitor); // only emails that really left count towards the limits
+  const subject = total ? `CV téléchargé depuis ton portfolio (${total})` : 'CV téléchargé depuis ton portfolio';
+  if (await sendEmail(subject, downloadEmail(info, total))) return;
+  // Only emails that really left count towards the limits
+  if (doc._id) {
+    await downloads.updateOne({ _id: doc._id }, { $set: { emailed: false } }).catch(() => {});
+  } else {
+    lastEmailByVisitor.delete(visitor);
     emailTimes.pop();
   }
 }

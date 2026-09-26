@@ -8,5 +8,8 @@
   "scripts": {
     "start": "node server.mjs",
     "dev": "node --env-file=../.env server.mjs"
+  },
+  "dependencies": {
+    "mongodb": "^6.21.0"
   }
 }

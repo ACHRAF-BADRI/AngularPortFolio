@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { TranslationService } from '../services/translation.service';
+import { VisitService } from '../services/visit.service';
 
 // API server on Render (api/ folder): each click on the download button is emailed to the owner.
 // Leave empty to disable. Example: "https://portfolio-api.onrender.com"
@@ -12,11 +13,12 @@ const API_URL = 'https://portfolio-api-yinb.onrender.com';
 })
 export class HomeComponent {
   translation = inject(TranslationService);
+  private visit = inject(VisitService);
 
   /** sendBeacon: fire-and-forget, the CV download itself is never delayed. */
   notifyDownload(): void {
     if (!API_URL) return;
-    const payload = JSON.stringify({ lang: this.translation.lang() });
+    const payload = JSON.stringify({ lang: this.translation.lang(), ...this.visit.details() });
     try {
       if (!navigator.sendBeacon(`${API_URL}/track/download`, payload)) throw new Error('beacon refused');
     } catch {

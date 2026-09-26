@@ -2,6 +2,7 @@ import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DarkModeService } from './services/dark-mode.service';
 import { TranslationService } from './services/translation.service';
+import { VisitService } from './services/visit.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,9 @@ export class AppComponent {
   isDark = this.darkModeService.isDark;
 
   translation = inject(TranslationService);
+
+  // Started with the app so it sees every page of the visit (used by the CV download email)
+  private visit = inject(VisitService);
 
   isMenuOpen = false;
 

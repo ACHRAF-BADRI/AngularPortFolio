@@ -8,13 +8,17 @@ services:
     plan: free                # sleeps after 15 min idle (first request then takes ~30-60 s)
     region: frankfurt
     rootDir: api
-    buildCommand: echo "no dependencies"
+    buildCommand: npm ci
     startCommand: npm start
     healthCheckPath: /health
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
         value: "22"
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB
+        value: portfolio
       - key: RESEND_API_KEY
         sync: false
       - key: NOTIFY_EMAIL
