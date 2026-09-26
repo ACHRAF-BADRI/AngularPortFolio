@@ -67,7 +67,7 @@ Create a `.env` file at the root of the project (it is git-ignored, never commit
 ```bash
 RESEND_API_KEY=re_...                       # Resend API key with "sending access"
 NOTIFY_EMAIL=you@example.com                # receives the emails (without a verified domain: your Resend account address)
-RESEND_FROM="Achraf Portfolio <onboarding@resend.dev>"
+RESEND_FROM="Portfolio <onboarding@resend.dev>"
 NOTIFY_TIMEZONE=Europe/Paris                # time zone used in the emails
 MONGODB_URI=mongodb+srv://...               # optional: without it, no message backup
 MONGODB_DB=portfolio
