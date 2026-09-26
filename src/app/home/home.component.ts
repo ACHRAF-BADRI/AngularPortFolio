@@ -3,7 +3,7 @@ import { TranslationService } from '../services/translation.service';
 
 // API server on Render (api/ folder): each click on the download button is emailed to the owner.
 // Leave empty to disable. Example: "https://portfolio-api.onrender.com"
-const API_URL = 'https://portfolio-api.onrender.com';
+const API_URL = 'https://portfolio-api-yinb.onrender.com';
 
 @Component({
   selector: 'app-home',
