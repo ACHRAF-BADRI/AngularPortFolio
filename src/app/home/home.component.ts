@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TranslationService } from '../services/translation.service';
 import { VisitService } from '../services/visit.service';
+import { ToastService } from '../services/toast.service';
 import { API_URL } from '../api';
 
 @Component({
@@ -11,9 +12,11 @@ import { API_URL } from '../api';
 export class HomeComponent {
   translation = inject(TranslationService);
   private visit = inject(VisitService);
+  private toasts = inject(ToastService);
 
   /** sendBeacon: fire-and-forget, the CV download itself is never delayed. */
   notifyDownload(): void {
+    this.toasts.show('success', 'home.downloadStarted');
     if (!API_URL) return;
     const payload = JSON.stringify({ lang: this.translation.lang(), ...this.visit.details() });
     try {

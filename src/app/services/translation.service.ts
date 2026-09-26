@@ -13,6 +13,7 @@ const DICTIONARY: Record<string, Record<Lang, string>> = {
   'home.greeting': { fr: 'Bonjour, je suis ACHRAF EL BADRI', en: "Hello, I'm ACHRAF EL BADRI" },
   'home.role': { fr: 'Développeur Full Stack', en: 'Full Stack Developer' },
   'home.download': { fr: 'Télécharger le CV', en: 'Download Resume' },
+  'home.downloadStarted': { fr: 'Merci ! Le téléchargement de mon CV a commencé.', en: 'Thank you! My resume download has started.' },
 
   'about.eyebrow': { fr: 'À propos', en: 'About' },
   'about.title': { fr: 'À propos de moi', en: 'About Me' },

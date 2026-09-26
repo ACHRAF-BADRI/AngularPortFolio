@@ -1,0 +1,30 @@
+@for (toast of toasts.list(); track toast.id) {
+  <div
+    class="toast"
+    [class.success]="toast.type === 'success'"
+    [class.dragging]="dragging()"
+    [class.leaving]="toasts.leaving()"
+    [style.transform]="'translateY(' + (dragY() + (toasts.leaving() && !dragY() ? -24 : 0)) + 'px)'"
+    [style.opacity]="opacity()"
+    role="status"
+    aria-live="polite"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp()"
+    (pointercancel)="onPointerUp()"
+    (pointerenter)="$event.pointerType === 'mouse' && toasts.pause()"
+    (pointerleave)="$event.pointerType === 'mouse' && !dragging() && toasts.resume()">
+    <span class="grabber" aria-hidden="true"></span>
+    <span class="icon">
+      <mat-icon>{{ toast.type === 'success' ? 'check' : 'priority_high' }}</mat-icon>
+    </span>
+    <span class="text">{{ translation.t(toast.key) }}</span>
+    <button type="button" class="toast-close" (click)="close()" [attr.aria-label]="translation.t('common.close')">
+      <mat-icon>close</mat-icon>
+    </button>
+    <span
+      class="progress"
+      [style.animation-duration.ms]="toast.durationMs"
+      [style.animation-play-state]="toasts.paused() ? 'paused' : 'running'"></span>
+  </div>
+}

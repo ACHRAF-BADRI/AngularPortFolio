@@ -52,8 +52,9 @@ a {
   background-color: var(--header-bg);
   position: fixed;
   width: 100%;
-  height: 9%;
-  min-height: 64px;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid var(--border-color);
   z-index: 30;
   transition: background-color 0.25s ease, border-color 0.25s ease;
@@ -93,11 +94,11 @@ a {
 
 .header .logo {
   display: block;
-  float: left;
   font-size: 28px;
-  padding: 10px 20px;
+  line-height: 1.2;
+  padding: 0 20px;
+  white-space: nowrap;
   text-decoration: none;
-  margin-top: 10px;
   color: var(--text-primary);
 }
 
@@ -112,7 +113,6 @@ a {
   max-width: 80vw;
   padding-top: 84px;
   background-color: var(--header-bg);
-  box-shadow: 4px 0 24px var(--shadow-color-strong);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   overflow-y: auto;
@@ -121,6 +121,7 @@ a {
 
 .header .menu.open {
   transform: translateX(0);
+  box-shadow: 4px 0 24px var(--shadow-color-strong); /* only when open, or it shows on the left edge */
 }
 
 .menu-backdrop {
@@ -135,8 +136,8 @@ a {
 .header .menu-icon {
   cursor: pointer;
   display: inline-block;
-  float: right;
-  padding: 28px 20px;
+  margin-left: auto;
+  padding: 20px;
   position: relative;
   user-select: none;
   border: none;
@@ -255,32 +256,42 @@ a {
 
 /* 48em = 768px */
 
-@media (min-width: 55em) {
+@media (min-width: 60.9375em) { /* 975px */
   .header li {
-    float: left;
+    display: flex;
+    align-items: center;
   }
   .header li a {
-    padding: 19px 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
   }
   .navbtn {
+    width: auto;
+    margin-right: 0;
+    /* same thickness at the bottom keeps the text centred */
     border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
   .navbtn:hover {
     background-color: var(--header-bg);
-    border-top-color: #000;
+    border-top-color: var(--nav-indicator);
   }
   .header .menu {
     position: static;
-    height: auto;
+    align-self: stretch;
+    height: 100%;
+    margin-left: auto;
     width: auto;
     max-width: none;
     padding-top: 0;
     box-shadow: none;
     transform: none;
     overflow: visible;
-    float: right;
     display: flex;
-    align-items: center;
+    align-items: stretch;
   }
   .menu-backdrop {
     display: none;
@@ -288,7 +299,7 @@ a {
   .header .menu-icon {
     display: none;
   }
-  .menu-title {
+  .header .menu-title {
     display: none;
   }
   .header .menu li {
@@ -308,7 +319,7 @@ a {
 
 /* Mobile dropdown menu items were as tall as the desktop nav row (20px
    padding + reserved border). Make them more compact on small screens. */
-@media (max-width: 54.99em) {
+@media (max-width: 60.9365em) { /* below 975px */
   .header .menu li a {
     display: block;
     width: 100%;

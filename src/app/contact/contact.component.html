@@ -44,17 +44,12 @@
         <textarea name="message" [(ngModel)]="contact.message" required maxlength="5000" rows="6"></textarea>
       </label>
 
-      <button type="submit" [disabled]="status() === 'sending'">
-        {{ translation.t(status() === 'sending' ? 'contact.sending' : 'contact.send') }}
+      <button type="submit" [disabled]="sending()">
+        {{ translation.t(sending() ? 'contact.sending' : 'contact.send') }}
       </button>
 
       @if (slow()) {
         <p class="form-note">{{ translation.t('contact.slow') }}</p>
-      }
-      @if (status() !== 'idle' && status() !== 'sending') {
-        <p class="form-status" [class.success]="status() === 'success'" role="status">
-          {{ translation.t('contact.' + status()) }}
-        </p>
       }
     </form>
   </mat-card>

@@ -18,6 +18,14 @@
   --scrollbar-thumb: #000000;
   --overlay-bg: rgba(0, 0, 0, 0.6);
   --image-fill-bg: #ffffff;
+  --nav-indicator: #000000; /* line above a hovered menu link */
+  --header-height: 64px;
+}
+
+@media (min-width: 60.9375em) { /* 975px: full menu */
+  :root {
+    --header-height: 70px;
+  }
 }
 
 :root.dark-theme {
@@ -38,6 +46,7 @@
   --scrollbar-thumb: #666666;
   --overlay-bg: rgba(0, 0, 0, 0.75);
   --image-fill-bg: var(--bg-card);
+  --nav-indicator: #ffffff;
 }
 
 html, body { height: 100%; }

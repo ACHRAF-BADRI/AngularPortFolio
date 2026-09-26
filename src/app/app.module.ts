@@ -17,6 +17,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ExperienceComponent } from './experience/experience.component';
 import { DetailModalComponent } from './shared/detail-modal/detail-modal.component';
+import { ToastComponent } from './shared/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DetailModalComponent } from './shared/detail-modal/detail-modal.compone
     ProjectsComponent,
     ContactComponent,
     ExperienceComponent,
-    DetailModalComponent
+    DetailModalComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

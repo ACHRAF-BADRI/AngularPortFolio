@@ -196,20 +196,6 @@ a:hover {
   color: var(--text-secondary);
 }
 
-.form-status {
-  margin: 0;
-  padding: 10px 12px;
-  border-radius: 5px;
-  font-size: 0.95rem;
-  border-left: 4px solid #d93025;
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-.form-status.success {
-  border-left-color: #1e8e3e;
-}
-
 @media (max-width: 480px) {
   .contact h1 {
     margin-top: 90px;
