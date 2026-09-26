@@ -1,5 +1,5 @@
 <div class="home">
   <h1 class="slide-in">{{ translation.t('home.greeting') }}</h1>
   <p>{{ translation.t('home.role') }}</p>
-  <a href="assets/documents/EL_BADRI_ACHRAF_CV.pdf" download><button>{{ translation.t('home.download') }}</button></a>
+  <a href="assets/documents/EL_BADRI_ACHRAF_CV.pdf" download (click)="notifyDownload()"><button>{{ translation.t('home.download') }}</button></a>
 </div>

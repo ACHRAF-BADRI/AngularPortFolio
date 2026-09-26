@@ -1,0 +1,25 @@
+# Render blueprint: https://render.com/docs/blueprint-spec
+# Deploys only the API server (api/). Secrets are NOT in this file: Render asks for them
+# ("sync: false") when the blueprint is created, and they stay in the Render dashboard.
+services:
+  - type: web
+    name: portfolio-api
+    runtime: node
+    plan: free                # sleeps after 15 min idle (first request then takes ~30-60 s)
+    region: frankfurt
+    rootDir: api
+    buildCommand: echo "no dependencies"
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: RESEND_API_KEY
+        sync: false
+      - key: NOTIFY_EMAIL
+        sync: false
+      - key: RESEND_FROM
+        value: Achraf Portfolio <onboarding@resend.dev>
+      - key: NOTIFY_TIMEZONE
+        value: Europe/Paris
