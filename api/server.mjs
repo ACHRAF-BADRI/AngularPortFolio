@@ -20,7 +20,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Sites allowed to call the contact form from a browser: the Cloudflare Pages site (and its preview
 // deployments, https://<preview>.<project>.pages.dev), the former GitHub Pages site and `ng serve`
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS
-  || 'https://angularportfolio.pages.dev,https://achraf-badri.github.io,http://localhost:4200')
+  || 'https://achrafelbadri.pages.dev,https://achraf-badri.github.io,http://localhost:4200')
   .split(',').map((o) => o.trim().replace(/\/+$/, ''));
 
 // Every download and message is stored here (collections "downloads" and "messages"). Without MONGODB_URI,

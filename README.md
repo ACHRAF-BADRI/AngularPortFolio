@@ -1,8 +1,8 @@
 # Achraf El Badri: Portfolio
 
-My personal portfolio, built with **Angular 18** and hosted on **GitHub Pages**, with a small **Node.js API on Render** for the contact form.
+My personal portfolio, built with **Angular 18** and hosted on **Cloudflare Pages**, with a small **Node.js API on Render** for the contact form.
 
-**Live site:** [achraf-badri.github.io/AngularPortFolio](https://achraf-badri.github.io/AngularPortFolio/)
+**Live site:** [achrafelbadri.pages.dev](https://achrafelbadri.pages.dev/)
 
 ## Features
 
@@ -19,11 +19,13 @@ My personal portfolio, built with **Angular 18** and hosted on **GitHub Pages**,
 ```
 Visitor's browser
    │
-   ├──▶ GitHub Pages ── static Angular site (docs/ folder)
+   ├──▶ Cloudflare Pages ── static Angular site, rebuilt on every push
    │
-   └──▶ Render ─────── Node.js API (api/ folder)
-                          ├──▶ Resend ────────── sends the emails
-                          └──▶ MongoDB Atlas ─── keeps a copy of the messages
+   ├──▶ GitHub Releases ─── the CV (PDF)
+   │
+   └──▶ Render ──────────── Node.js API (api/ folder)
+                               ├──▶ Resend ────────── sends the emails
+                               └──▶ MongoDB Atlas ─── keeps a copy of the messages
 ```
 
 The site itself holds no secret: the API keys live only on the Render server.
@@ -43,10 +45,11 @@ src/app/
 ├── services/                translation (FR / EN), dark mode, toasts
 ├── models/                  Project and Experience types
 └── api.ts                   URL of the API server on Render
-public/assets/               images and the CV (PDF)
+public/assets/               images
+public/_headers              cache rules read by Cloudflare Pages
 api/                         Node.js API server (Render)
-docs/                        built site, published by GitHub Pages
 render.yaml                  Render deployment (Blueprint)
+.node-version                Node.js version used by the Cloudflare build
 ```
 
 ## Run locally
@@ -85,17 +88,30 @@ The site calls the API address set in [src/app/api.ts](src/app/api.ts). Point it
 
 ## Deployment
 
-### Website (GitHub Pages)
+### Website (Cloudflare Pages)
 
-GitHub Pages serves the `docs/` folder of the `main` branch. After a change:
+Cloudflare builds and publishes the site automatically on every push to `main`: there is nothing to build by hand.
 
-```bash
-npx ng build --base-href /AngularPortFolio/
+Set up once: Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git** → select this repository, with:
+
+| Setting | Value |
+|---|---|
+| Project name | `achrafelbadri` (gives `achrafelbadri.pages.dev`) |
+| Framework preset | None |
+| Build command | `npx ng build` |
+| Build output directory | `dist/my-portfolio/browser` |
+
+The site address must be allowed by the API server (see `ALLOWED_ORIGINS` below), or the contact form is blocked.
+
+### CV
+
+The "Download" button points to the PDF attached to the GitHub release tagged `cv`:
+
+```
+https://github.com/ACHRAF-BADRI/AngularPortFolio/releases/download/cv/EL_BADRI_ACHRAF_CV.pdf
 ```
 
-Then replace the content of `docs/` with `dist/my-portfolio/browser/` (keep `docs/.nojekyll`), commit and push.
-
-> In Git Bash, run `MSYS_NO_PATHCONV=1 npx ng build --base-href /AngularPortFolio/`, otherwise Git Bash turns `/AngularPortFolio/` into a Windows path and breaks the site.
+To update the CV: **Releases → CV → Edit**, delete the old PDF and upload the new one with **exactly the same file name** (`EL_BADRI_ACHRAF_CV.pdf`). No code change or rebuild is needed.
 
 ### API server (Render)
 
@@ -106,14 +122,16 @@ The service is described in [render.yaml](render.yaml) and redeploys automatical
 3. In MongoDB Atlas → **Network Access**, allow Render to connect (`0.0.0.0/0`, the free plan has no fixed IP).
 4. Check that `https://<service>.onrender.com/health` returns `{"status":"ok"}`, and put that address in [src/app/api.ts](src/app/api.ts).
 
+The sites allowed to call the API from a browser are listed in [api/server.mjs](api/server.mjs) (`https://achrafelbadri.pages.dev` and `http://localhost:4200`, plus the Cloudflare preview deployments). To change them without touching the code, set `ALLOWED_ORIGINS` on Render, comma-separated.
+
 The free Render plan sleeps after 15 minutes without requests: the next request then takes 30 to 60 seconds. The contact form tells the visitor when the server is waking up.
 
 ## Tech stack
 
-Angular 18 · Angular Material · TypeScript · Angular SSR (prerendering) · Node.js · MongoDB Atlas · Resend · GitHub Pages · Render
+Angular 18 · Angular Material · TypeScript · Angular SSR (prerendering) · Node.js · MongoDB Atlas · Resend · Cloudflare Pages · Render
 
 ## Author
 
 **ACHRAF EL BADRI**, Full Stack Developer
 
-[LinkedIn](https://www.linkedin.com/in/achraf-el-badri-769645245) · [GitHub](https://github.com/ACHRAF-BADRI) · [Portfolio](https://achraf-badri.github.io/AngularPortFolio/)
+[LinkedIn](https://www.linkedin.com/in/achraf-el-badri-769645245) · [GitHub](https://github.com/ACHRAF-BADRI) · [Portfolio](https://achrafelbadri.pages.dev/)
