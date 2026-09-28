@@ -17,9 +17,11 @@ const MAX_MESSAGES_PER_VISITOR = 5;     // contact form: per visitor, every 15 m
 const MAX_MESSAGES_PER_HOUR = 30;       // contact form: all visitors together
 const CONTACT_LIMITS = { name: 100, email: 254, message: 5000 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Sites allowed to call the contact form from a browser (the GitHub Pages site and `ng serve`)
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://achraf-badri.github.io,http://localhost:4200')
-  .split(',').map((o) => o.trim());
+// Sites allowed to call the contact form from a browser: the Cloudflare Pages site (and its preview
+// deployments, https://<preview>.<project>.pages.dev), the former GitHub Pages site and `ng serve`
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS
+  || 'https://angularportfolio.pages.dev,https://achraf-badri.github.io,http://localhost:4200')
+  .split(',').map((o) => o.trim().replace(/\/+$/, ''));
 
 // Every download and message is stored here (collections "downloads" and "messages"). Without MONGODB_URI,
 // or while the database is unreachable, the server still emails, with in-memory limits and no counter.
@@ -297,10 +299,17 @@ async function contact(req, res) {
   sendJson(res, emailed ? 200 : 502, emailed ? { ok: true } : { error: 'send_failed' });
 }
 
+function isAllowedOrigin(origin) {
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Preview deployments of an allowed Cloudflare Pages site: https://<preview>.<project>.pages.dev
+  return ALLOWED_ORIGINS.some((url) => url.endsWith('.pages.dev')
+    && /^https:\/\/[a-z0-9-]+\./.test(origin) && origin.endsWith(`.${new URL(url).host}`));
+}
+
 /** Lets the allowed sites read the answers of this server from a browser. */
 function allowCors(req, res) {
   const origin = req.headers.origin;
-  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+  if (origin && isAllowedOrigin(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
