@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ExperienceComponent } from './experience/experience.component';
 import { DetailModalComponent } from './shared/detail-modal/detail-modal.component';
 import { ToastComponent } from './shared/toast/toast.component';
+import { ScrollTopComponent } from './shared/scroll-top/scroll-top.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ToastComponent } from './shared/toast/toast.component';
     ContactComponent,
     ExperienceComponent,
     DetailModalComponent,
-    ToastComponent
+    ToastComponent,
+    ScrollTopComponent
   ],
   imports: [
     BrowserModule,
