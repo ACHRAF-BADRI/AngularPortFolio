@@ -2,18 +2,28 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--button-text);
   background-color: var(--button-bg);
-  border: 2px solid var(--bg-primary);
-  border-radius: 5px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  transition: background-color 0.3s, opacity 0.3s, transform 0.3s, visibility 0.3s;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+.scroll-to-top-btn svg {
+  width: 22px;
+  height: 22px;
 }
 
 .scroll-to-top-btn.visible {
@@ -22,8 +32,8 @@
   transform: translateY(0);
 }
 
-.scroll-to-top-btn:hover {
+.scroll-to-top-btn.visible:hover {
   background-color: var(--bg-card);
   color: var(--text-primary);
-  border: 2px solid var(--text-primary);
+  transform: translateY(-3px);
 }
