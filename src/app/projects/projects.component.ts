@@ -54,7 +54,7 @@ export class ProjectsComponent implements OnInit {
         'Compteur de pas GPS : suivi en direct (démarrer, pause, reprendre, terminer) avec distance, pas et calories estimés, aperçu du parcours, historique des sessions et graphiques.',
         'Authentification JWT avec rôles utilisateur/admin, suspension de compte et édition du profil ; panneau d\'administration (gestion des utilisateurs, statistiques, vues par utilisateur).',
         'Interface français/anglais avec contenu généré par l\'IA traduit à la volée, responsive et mode sombre.',
-        'Monorepo : API Flask déployée sur Render (Docker + gunicorn) et application React + TypeScript déployée sur Netlify, avec déploiement continu à chaque push GitHub.'
+        'Monorepo : API Flask déployée sur Render (Docker + gunicorn) et application React + TypeScript déployée sur Cloudflare Pages, avec déploiement continu à chaque push GitHub.'
       ],
       detailsEn: [
         'Gym coach: AI-generated weekly program (workout split, nutrition, supplements) based on goal, level and equipment, with an estimate of the time needed to see results.',
@@ -64,45 +64,48 @@ export class ProjectsComponent implements OnInit {
         'GPS step counter: live tracking (start, pause, resume, finish) with distance, estimated steps and calories, a route preview, session history and charts.',
         'JWT authentication with user and admin roles, account suspension and profile editing; admin panel (user management, statistics, per-user views).',
         'French / English interface with AI-generated content translated on the fly, responsive layout and dark mode.',
-        'Monorepo: Flask API deployed on Render (Docker + gunicorn) and React + TypeScript app deployed on Netlify, with continuous deployment on every GitHub push.'
+        'Monorepo: Flask API deployed on Render (Docker + gunicorn) and React + TypeScript app deployed on Cloudflare Pages, with continuous deployment on every GitHub push.'
       ],
       image: 'assets/images/python.webp',
-      tech: ['Python (Flask)', 'React', 'TypeScript', 'Tailwind CSS', 'MongoDB Atlas', 'Groq API', 'JWT', 'Docker', 'Render', 'Netlify'],
+      tech: ['Python (Flask)', 'React', 'TypeScript', 'Tailwind CSS', 'MongoDB Atlas', 'Groq API', 'JWT', 'Docker', 'Render', 'Cloudflare Pages'],
       period: 'Projet personnel',
       periodEn: 'Personal project',
-      link: 'https://vertex-coach.netlify.app',
+      link: 'https://vertex-coach.pages.dev',
       githubLink: 'https://github.com/ACHRAF-BADRI/Vertex-AI-Coach'
     },
     {
-      title: 'Application météo avec prédictions IA',
-      titleEn: 'Weather App with AI Predictions',
-      description: 'Tableau de bord météo moderne et responsive (FR/EN) : météo en direct, prévisions, carte interactive et prédiction par IA des jours suivants, avec une API Node/Express qui garde les clés secrètes.',
-      descriptionEn: 'Modern, responsive weather dashboard (EN/FR): live weather, forecasts, an interactive map and an AI prediction of the coming days, backed by a Node/Express API that keeps the API keys secret.',
+      title: 'ScrumFlow — gestion de projets Scrum',
+      titleEn: 'ScrumFlow — Scrum Project Management',
+      description: 'Espace de travail pour les équipes Scrum : planification des sprints, backlog, tableau Kanban en glisser-déposer, burndown et vélocité, discussions sur chaque tâche et collaboration en temps réel.',
+      descriptionEn: 'A workspace for Scrum teams: sprint planning, backlog, drag-and-drop board, burndown and velocity charts, discussions on each task and real-time collaboration.',
       details: [
-        'Météo actuelle pour 5 villes par défaut, plus recherche avec autocomplétion pour ajouter ses propres villes (sauvegardées dans le navigateur).',
-        'Page ville : conditions détaillées, carte interactive, prochaines 24 heures et prévisions sur 3 jours.',
-        'Prédiction IA : un modèle de lissage exponentiel à tendance amortie (méthode de Holt) apprend des 7 derniers jours et des prévisions à 7 jours pour estimer les 4 jours suivants, avec tendance, marge d\'incertitude, risque de pluie et score de confiance.',
-        'Résumé écrit et conseils pratiques générés par un modèle de langage (Groq) ou par des règles intégrées, mis en cache 1 heure par ville et par langue.',
-        'Interface français/anglais détectée automatiquement, mode clair/sombre, design responsive, boîtes de confirmation et notifications.',
-        'Formulaire de contact qui envoie chaque message par e-mail (Resend), avec protection anti-spam.',
-        'Architecture : site statique Next.js sur Netlify et API Express sur Render ; les clés API (WeatherAPI, Groq, Resend) restent uniquement sur le serveur.'
+        'Projets et équipe : invitations par e-mail, rôles (propriétaire / admin / membre) vérifiés par l\'API.',
+        'Vue tableau groupée par sprint et backlog avec édition directe, et tableau Kanban du sprint actif en glisser-déposer avec limites WIP par colonne.',
+        'Cycle de vie des sprints (planifier, démarrer, terminer), historique avec points engagés / livrés, vélocité moyenne et rétrospectives.',
+        'Tableau de bord : burndown, burnup, flux cumulé, vélocité et charge de l\'équipe ; exports CSV et rapport de sprint en PDF.',
+        'Daily standup minuté, planning poker en temps réel, calendrier, epics, dépendances entre tâches et workflow de statuts personnalisable.',
+        'Détail des tâches : description Markdown, checklist, pièces jointes (Cloudinary), commentaires avec @mentions et historique ; intégration GitHub / GitLab par webhook.',
+        'Temps réel avec Socket.io (modifications, présence, notifications), suggestions IA optionnelles (Groq / Gemini) et application installable (PWA).',
+        'Connexion avec Google, Microsoft, GitHub, GitLab ou Bitbucket et vérification en deux étapes (TOTP) ; interface français / anglais, thème clair / sombre, responsive.',
+        'Architecture : React + Vite sur Cloudflare Pages, API Node.js / Express sur Render, MongoDB Atlas ; tests (node:test, Vitest) et CI GitHub Actions.'
       ],
       detailsEn: [
-        'Current weather for 5 default cities, plus search with autocomplete to add your own (saved in the browser).',
-        'City page: detailed conditions, interactive map, next 24 hours and a 3-day forecast.',
-        'AI prediction: a damped-trend exponential smoothing model (Holt\'s method) learns from the past 7 days and the 7-day forecast to estimate the 4 days after, with a trend, an uncertainty range, rain chance and a confidence score.',
-        'Written summary and practical tips generated by a language model (Groq) or by built-in rules, cached for 1 hour per city and language.',
-        'English / French interface auto-detected from the browser, light / dark mode, responsive design, confirmation dialogs and toast notifications.',
-        'Contact form that emails each message (Resend), with anti-spam protection.',
-        'Architecture: Next.js static site on Netlify and Express API on Render; the API keys (WeatherAPI, Groq, Resend) live only on the server.'
+        'Projects and team: email invitations, roles (owner / admin / member) checked by the API.',
+        'Table view grouped by sprint and backlog with inline editing, and a drag-and-drop board of the active sprint with per-column WIP limits.',
+        'Sprint lifecycle (plan, start, complete), history with committed / delivered points, average velocity and retrospectives.',
+        'Dashboard: burndown, burnup, cumulative flow, velocity and team workload; CSV exports and a printable sprint report.',
+        'Timed daily standup, real-time planning poker, calendar, epics, task dependencies and a customizable status workflow.',
+        'Task details: Markdown description, checklist, attachments (Cloudinary), comments with @mentions and history; GitHub / GitLab integration via webhooks.',
+        'Real time with Socket.io (changes, presence, notifications), optional AI suggestions (Groq / Gemini) and an installable app (PWA).',
+        'Sign in with Google, Microsoft, GitHub, GitLab or Bitbucket and two-step verification (TOTP); French / English interface, light / dark theme, responsive.',
+        'Architecture: React + Vite on Cloudflare Pages, Node.js / Express API on Render, MongoDB Atlas; tests (node:test, Vitest) and GitHub Actions CI.'
       ],
-      image: 'assets/images/nextJS_img.png',
-      imageFit: 'contain',
-      tech: ['Next.js', 'React', 'Tailwind CSS', 'Node.js', 'Express', 'Groq API', 'Resend', 'Render', 'Netlify'],
+      image: 'assets/images/reactPic.png',
+      tech: ['React', 'Vite', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB Atlas', 'Socket.io', 'JWT', 'Render', 'Cloudflare Pages'],
       period: 'Projet personnel',
       periodEn: 'Personal project',
-      link: 'https://achrafweather.netlify.app/',
-      githubLink: 'https://github.com/ACHRAF-BADRI/Weather-Application-NextJS'
+      link: 'https://scrumflow.pages.dev/',
+      githubLink: 'https://github.com/ACHRAF-BADRI/ScrumFlow'
     },
     {
       title: 'Détection d\'accidents de la route par IA',
@@ -116,7 +119,7 @@ export class ProjectsComponent implements OnInit {
         'Comptes utilisateurs (inscription, connexion, profil, mot de passe) et sauvegarde automatique des images et vidéos dans le cloud, avec nouvelle tentative en cas de coupure.',
         'Espace administrateur : tableau de bord (utilisateurs, images, vidéos, stockage), création / suspension / suppression de comptes, gestion des rôles et accès aux médias de chaque utilisateur.',
         'Interface moderne (CustomTkinter) : thème clair / sombre / système, français / anglais, écran de chargement.',
-        'Architecture : application de bureau ↔ API FastAPI (JWT) sur Render ↔ MongoDB Atlas (GridFS pour les images et vidéos) ; site de téléchargement sur GitHub Pages avec e-mail à chaque téléchargement ; installateur Windows (PyInstaller + Inno Setup).'
+        'Architecture : application de bureau ↔ API FastAPI (JWT) sur Render ↔ MongoDB Atlas (GridFS pour les images et vidéos) ; site de téléchargement sur Cloudflare Pages avec e-mail à chaque téléchargement ; installateur Windows (PyInstaller + Inno Setup).'
       ],
       detailsEn: [
         'Real-time detection on a video file or a webcam: YOLOv3 (OpenCV DNN) finds the vehicles and a convolutional neural network (TensorFlow / Keras) estimates the probability of an accident.',
@@ -125,14 +128,45 @@ export class ProjectsComponent implements OnInit {
         'User accounts (sign up, sign in, profile, password) and automatic cloud backup of images and videos, retried if the connection drops.',
         'Admin area: dashboard (users, images, videos, storage), create / suspend / delete accounts, manage roles and access every user\'s media.',
         'Modern interface (CustomTkinter): light / dark / system theme, English / French, loading screen.',
-        'Architecture: desktop app ↔ FastAPI API (JWT) on Render ↔ MongoDB Atlas (GridFS for images and videos); download website on GitHub Pages with an email on each download; Windows installer (PyInstaller + Inno Setup).'
+        'Architecture: desktop app ↔ FastAPI API (JWT) on Render ↔ MongoDB Atlas (GridFS for images and videos); download website on Cloudflare Pages with an email on each download; Windows installer (PyInstaller + Inno Setup).'
       ],
       image: 'assets/images/python.webp',
       tech: ['Python', 'YOLOv3', 'TensorFlow / Keras', 'OpenCV', 'CustomTkinter', 'FastAPI', 'MongoDB Atlas', 'JWT', 'Render'],
       period: 'Projet personnel',
       periodEn: 'Personal project',
-      link: 'https://achraf-badri.github.io/Car-Accident-detection-App/',
+      link: 'https://accidentai.pages.dev/',
       githubLink: 'https://github.com/ACHRAF-BADRI/Car-Accident-detection-App'
+    },
+    {
+      title: 'Application météo avec prédictions IA',
+      titleEn: 'Weather App with AI Predictions',
+      description: 'Tableau de bord météo moderne et responsive (FR/EN) : météo en direct, prévisions, carte interactive et prédiction par IA des jours suivants, avec une API Node/Express qui garde les clés secrètes.',
+      descriptionEn: 'Modern, responsive weather dashboard (EN/FR): live weather, forecasts, an interactive map and an AI prediction of the coming days, backed by a Node/Express API that keeps the API keys secret.',
+      details: [
+        'Météo actuelle pour 5 villes par défaut, plus recherche avec autocomplétion pour ajouter ses propres villes (sauvegardées dans le navigateur).',
+        'Page ville : conditions détaillées, carte interactive, prochaines 24 heures et prévisions sur 3 jours.',
+        'Prédiction IA : un modèle de lissage exponentiel à tendance amortie (méthode de Holt) apprend des 7 derniers jours et des prévisions à 7 jours pour estimer les 4 jours suivants, avec tendance, marge d\'incertitude, risque de pluie et score de confiance.',
+        'Résumé écrit et conseils pratiques générés par un modèle de langage (Groq) ou par des règles intégrées, mis en cache 1 heure par ville et par langue.',
+        'Interface français/anglais détectée automatiquement, mode clair/sombre, design responsive, boîtes de confirmation et notifications.',
+        'Formulaire de contact qui envoie chaque message par e-mail (Resend), avec protection anti-spam.',
+        'Architecture : site statique Next.js sur Cloudflare Pages et API Express sur Render ; les clés API (WeatherAPI, Groq, Resend) restent uniquement sur le serveur.'
+      ],
+      detailsEn: [
+        'Current weather for 5 default cities, plus search with autocomplete to add your own (saved in the browser).',
+        'City page: detailed conditions, interactive map, next 24 hours and a 3-day forecast.',
+        'AI prediction: a damped-trend exponential smoothing model (Holt\'s method) learns from the past 7 days and the 7-day forecast to estimate the 4 days after, with a trend, an uncertainty range, rain chance and a confidence score.',
+        'Written summary and practical tips generated by a language model (Groq) or by built-in rules, cached for 1 hour per city and language.',
+        'English / French interface auto-detected from the browser, light / dark mode, responsive design, confirmation dialogs and toast notifications.',
+        'Contact form that emails each message (Resend), with anti-spam protection.',
+        'Architecture: Next.js static site on Cloudflare Pages and Express API on Render; the API keys (WeatherAPI, Groq, Resend) live only on the server.'
+      ],
+      image: 'assets/images/nextJS_img.png',
+      imageFit: 'contain',
+      tech: ['Next.js', 'React', 'Tailwind CSS', 'Node.js', 'Express', 'Groq API', 'Resend', 'Render', 'Cloudflare Pages'],
+      period: 'Projet personnel',
+      periodEn: 'Personal project',
+      link: 'https://achrafweather.pages.dev/',
+      githubLink: 'https://github.com/ACHRAF-BADRI/Weather-Application-NextJS'
     },
     {
       title: 'Projet (React)',

@@ -1,5 +1,15 @@
 # Achraf El Badri: Portfolio
 
+![Angular](https://img.shields.io/badge/Angular-18-dd0031?logo=angular&logoColor=white)
+![Angular Material](https://img.shields.io/badge/Angular%20Material-18-3f51b5?logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178c6?logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=nodedotjs&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47a248?logo=mongodb&logoColor=white)
+![Resend](https://img.shields.io/badge/Email-Resend-000000?logo=resend&logoColor=white)
+![Render](https://img.shields.io/badge/API-Render-46e3b7?logo=render&logoColor=white)
+![Cloudflare Pages](https://img.shields.io/badge/Front-Cloudflare%20Pages-f38020?logo=cloudflare&logoColor=white)
+![License](https://img.shields.io/badge/License-AGPL%20v3-blue)
+
 My personal portfolio, built with **Angular 18** and hosted on **Cloudflare Pages**, with a small **Node.js API on Render** for the contact form.
 
 **Live site:** [achrafelbadri.pages.dev](https://achrafelbadri.pages.dev/)
