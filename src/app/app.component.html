@@ -1,86 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <header class="header">
-    <a routerLink="/" class="logo" (click)="closeMenu()">ACHRAF EL BADRI</a>
-    <button
-      class="menu-icon"
-      type="button"
-      (click)="toggleMenu()"
-      [attr.aria-expanded]="isMenuOpen"
-      aria-label="Ouvrir le menu"
-      aria-controls="nav-menu">
-      <span class="navicon" [class.open]="isMenuOpen"></span>
-    </button>
+<header class="header">
+  <a routerLink="/" class="logo" (click)="closeMenu()">ACHRAF EL BADRI</a>
+  <button
+    class="menu-icon"
+    type="button"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="isMenuOpen"
+    aria-label="Ouvrir le menu"
+    aria-controls="nav-menu">
+    <span class="navicon" [class.open]="isMenuOpen"></span>
+  </button>
 
-    <div class="menu-backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
+  <div class="menu-backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
 
-    <ul class="menu" id="nav-menu" [class.open]="isMenuOpen">
-      <li class="menu-title">{{ translation.t('nav.menuTitle') }}</li>
-      <li><a class="navbtn" routerLink="/" (click)="closeMenu()">{{ translation.t('nav.home') }}</a></li>
-      <li><a class="navbtn" routerLink="/about" (click)="closeMenu()">{{ translation.t('nav.about') }}</a></li>
-      <li><a class="navbtn" routerLink="/projects" (click)="closeMenu()">{{ translation.t('nav.projects') }}</a></li>
-      <li><a class="navbtn" routerLink="/experience" (click)="closeMenu()">{{ translation.t('nav.experience') }}</a></li>
-      <li><a class="navbtn" routerLink="/contact" (click)="closeMenu()">{{ translation.t('nav.contact') }}</a></li>
-      <li class="lang-toggle-item">
-        <button
-          class="lang-toggle-btn"
-          type="button"
-          (click)="toggleLang()"
-          [attr.aria-label]="translation.lang() === 'fr' ? 'Passer en anglais' : 'Switch to French'">
-          {{ translation.lang() === 'fr' ? 'FR' : 'EN' }}
-        </button>
-      </li>
-      <li class="theme-toggle-item">
-        <button
-          class="theme-toggle-btn"
-          type="button"
-          (click)="toggleTheme()"
-          [attr.aria-label]="isDark() ? 'Activer le mode clair' : 'Activer le mode sombre'"
-          [attr.aria-pressed]="isDark()">
-          <svg *ngIf="!isDark()" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"></circle>
-            <line x1="12" y1="2" x2="12" y2="4.5"></line>
-            <line x1="12" y1="19.5" x2="12" y2="22"></line>
-            <line x1="4.93" y1="4.93" x2="6.64" y2="6.64"></line>
-            <line x1="17.36" y1="17.36" x2="19.07" y2="19.07"></line>
-            <line x1="2" y1="12" x2="4.5" y2="12"></line>
-            <line x1="19.5" y1="12" x2="22" y2="12"></line>
-            <line x1="4.93" y1="19.07" x2="6.64" y2="17.36"></line>
-            <line x1="17.36" y1="6.64" x2="19.07" y2="4.93"></line>
-          </svg>
-          <svg *ngIf="isDark()" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-      </li>
-    </ul>
-  </header>
-  <!--<mat-toolbar color="primary">
-    <span>ACHRAF EL BADRI</span>
-    <span class="spacer"></span>
+  <ul class="menu" id="nav-menu" [class.open]="isMenuOpen">
+    <li class="menu-title">{{ translation.t('nav.menuTitle') }}</li>
+    <li><a class="navbtn" routerLink="/" (click)="closeMenu()">{{ translation.t('nav.home') }}</a></li>
+    <li><a class="navbtn" routerLink="/about" (click)="closeMenu()">{{ translation.t('nav.about') }}</a></li>
+    <li><a class="navbtn" routerLink="/projects" (click)="closeMenu()">{{ translation.t('nav.projects') }}</a></li>
+    <li><a class="navbtn" routerLink="/experience" (click)="closeMenu()">{{ translation.t('nav.experience') }}</a></li>
+    <li><a class="navbtn" routerLink="/contact" (click)="closeMenu()">{{ translation.t('nav.contact') }}</a></li>
+    <li class="lang-toggle-item">
+      <button
+        class="lang-toggle-btn"
+        type="button"
+        (click)="toggleLang()"
+        [attr.aria-label]="translation.lang() === 'fr' ? 'Passer en anglais' : 'Switch to French'">
+        {{ translation.lang() === 'fr' ? 'FR' : 'EN' }}
+      </button>
+    </li>
+    <li class="theme-toggle-item">
+      <button
+        class="theme-toggle-btn"
+        type="button"
+        (click)="toggleTheme()"
+        [attr.aria-label]="isDark() ? 'Activer le mode clair' : 'Activer le mode sombre'"
+        [attr.aria-pressed]="isDark()">
+        <svg *ngIf="!isDark()" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"></circle>
+          <line x1="12" y1="2" x2="12" y2="4.5"></line>
+          <line x1="12" y1="19.5" x2="12" y2="22"></line>
+          <line x1="4.93" y1="4.93" x2="6.64" y2="6.64"></line>
+          <line x1="17.36" y1="17.36" x2="19.07" y2="19.07"></line>
+          <line x1="2" y1="12" x2="4.5" y2="12"></line>
+          <line x1="19.5" y1="12" x2="22" y2="12"></line>
+          <line x1="4.93" y1="19.07" x2="6.64" y2="17.36"></line>
+          <line x1="17.36" y1="6.64" x2="19.07" y2="4.93"></line>
+        </svg>
+        <svg *ngIf="isDark()" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </li>
+  </ul>
+</header>
+<!--<mat-toolbar color="primary">
+  <span>ACHRAF EL BADRI</span>
+  <span class="spacer"></span>
 
-    <button class="navbtn" routerLink="/">Home</button>
-    <button class="navbtn" routerLink="/about">About</button>
-    <button class="navbtn" routerLink="/projects">Projects</button>
-    <button class="navbtn" routerLink="/experience">Experience</button>
-    <button class="navbtn" routerLink="/contact">Contact</button>
+  <button class="navbtn" routerLink="/">Home</button>
+  <button class="navbtn" routerLink="/about">About</button>
+  <button class="navbtn" routerLink="/projects">Projects</button>
+  <button class="navbtn" routerLink="/experience">Experience</button>
+  <button class="navbtn" routerLink="/contact">Contact</button>
 
-    <a mat-button routerLink="/">Home</a>
-    <a mat-button routerLink="/about">About</a>
-    <a mat-button routerLink="/projects">Projects</a>
-    <a mat-button routerLink="/experience">Experience</a>
-    <a mat-button routerLink="/contact">Contact</a>
-  </mat-toolbar>-->
-  <router-outlet></router-outlet>
-  <app-toast></app-toast>
-  <app-scroll-top></app-scroll-top>
-
-</body>
-</html>
-
+  <a mat-button routerLink="/">Home</a>
+  <a mat-button routerLink="/about">About</a>
+  <a mat-button routerLink="/projects">Projects</a>
+  <a mat-button routerLink="/experience">Experience</a>
+  <a mat-button routerLink="/contact">Contact</a>
+</mat-toolbar>-->
+<router-outlet></router-outlet>
+<app-toast></app-toast>
+<app-scroll-top></app-scroll-top>
