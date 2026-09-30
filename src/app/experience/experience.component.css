@@ -177,30 +177,3 @@
 /*----------------------------------------------------*/
 /*----------------------------------------------------*/
 
-.scroll-to-top-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  color: var(--button-text);
-  background-color: var(--button-bg);
-  border: 2px solid var(--bg-primary);
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s;
-  opacity: 0;
-  z-index: 1000;
-}
-
-.scroll-to-top-btn.visible {
-  display: block;
-  opacity: 1;
-}
-
-.scroll-to-top-btn:hover {
-  background-color: var(--bg-card);
-  color: var(--text-primary);
-  border: 2px solid var(--text-primary);
-}

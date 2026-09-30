@@ -66,7 +66,10 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.25s ease, color 0.25s ease;
-  overflow-x: hidden;
+  /* clip, not hidden: hidden would turn body into its own scroll container
+     (html also sets overflow-x), so the window would never scroll and
+     window:scroll listeners (the "Top" button) would never fire. */
+  overflow-x: clip;
 }
 
 body.modal-open {

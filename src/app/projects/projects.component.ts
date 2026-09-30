@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Project } from '../models/project.model';
 import { TranslationService } from '../services/translation.service';
 
@@ -233,7 +233,6 @@ export class ProjectsComponent implements OnInit {
     },
   ];
 
-  isScrollButtonVisible = false;
   isVisible: boolean = false;
 
   isModalOpen = false;
@@ -245,15 +244,6 @@ export class ProjectsComponent implements OnInit {
     setTimeout(() => {
       this.isVisible = true;
     }, 100);
-  }
-
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    this.isScrollButtonVisible = window.pageYOffset > 100;
-  }
-
-  scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   openDetails(project: Project): void {

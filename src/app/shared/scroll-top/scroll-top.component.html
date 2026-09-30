@@ -1,0 +1,9 @@
+<button
+  class="scroll-to-top-btn"
+  type="button"
+  (click)="scrollToTop()"
+  [class.visible]="isVisible"
+  [attr.aria-hidden]="!isVisible"
+  [attr.tabindex]="isVisible ? 0 : -1">
+  {{ translation.t('common.top') }}
+</button>

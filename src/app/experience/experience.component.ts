@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Experience } from '../models/experience.model';
 import { TranslationService } from '../services/translation.service';
 
@@ -130,7 +130,6 @@ export class ExperienceComponent implements OnInit {
     }
   ];
 
-  isScrollButtonVisible = false;
   isVisible: boolean = false;
 
   isModalOpen = false;
@@ -142,15 +141,6 @@ export class ExperienceComponent implements OnInit {
     setTimeout(() => {
       this.isVisible = true;
     }, 100);
-  }
-
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    this.isScrollButtonVisible = window.pageYOffset > 100;
-  }
-
-  scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   openDetails(experience: Experience): void {
