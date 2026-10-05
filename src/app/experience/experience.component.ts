@@ -44,8 +44,8 @@ export class ExperienceComponent implements OnInit {
       ]
     },
     {
-      title: 'Bouygues E&S — Stage de fin d\'études',
-      titleEn: 'Bouygues E&S — Graduate Internship',
+      title: 'Bouygues E&S : Stage de fin d\'études',
+      titleEn: 'Bouygues E&S: Graduate Internship',
       description: 'Paris, France. Développeur Full-Stack (stage de fin d\'études).',
       descriptionEn: 'Paris, France. Full-Stack Developer (graduate internship).',
       date: 'Avril 2025 - Novembre 2025',

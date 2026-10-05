@@ -32,8 +32,8 @@ export class ProjectsComponent implements OnInit {
       periodEn: 'Bouygues E&S — April 2025 - November 2025'
     },
     {
-      title: 'Migration Atlas — AngularJS vers Angular 15',
-      titleEn: 'Atlas Migration — AngularJS to Angular 15',
+      title: 'Migration Atlas : AngularJS vers Angular 15',
+      titleEn: 'Atlas Migration: AngularJS to Angular 15',
       description: 'Migration du Front Office de l\'application Atlas d\'AngularJS 1.1 vers Angular 15 : architecture modulaire, design entièrement responsive, mode clair/sombre et internationalisation (i18n) FR/EN.',
       descriptionEn: 'Migration of the Atlas application\'s Front Office from AngularJS 1.1 to Angular 15: modular architecture, fully responsive design, light/dark mode, and FR/EN internationalization (i18n).',
       image: 'assets/images/amundi_imgg.jpg',
@@ -42,40 +42,42 @@ export class ProjectsComponent implements OnInit {
       periodEn: 'Amundi — August 2024 - January 2025'
     },
     {
-      title: 'Suivi d\'entraînement sportif assisté par IA',
-      titleEn: 'AI-Assisted Fitness Tracking',
-      description: 'Vertex AI Coach : plateforme de coaching sportif propulsée par l\'IA, coach de musculation (programme, nutrition, compléments), coach de course à pied (journal d\'entraînement, plans adaptatifs) et compteur de pas GPS.',
-      descriptionEn: 'Vertex AI Coach: an AI-powered fitness coaching platform, a gym coach (workout program, nutrition, supplements), a running coach (training log, adaptive training plans) and a GPS step counter.',
+      title: 'Clinique Badri : site et gestion d\'un cabinet de chirurgie',
+      titleEn: 'Clinique Badri: Surgery Clinic Website & Management',
+      description: 'Application web full-stack pour un cabinet de chirurgie plastique, esthétique et reconstructrice : site public, prise de rendez-vous en ligne, messagerie sécurisée, espace médecin et administration des comptes.',
+      descriptionEn: 'Full-stack web application for a plastic, aesthetic and reconstructive surgery practice: public website, online appointment booking, secure messaging, a doctor workspace and account administration.',
       details: [
-        'Coach de musculation : programme hebdomadaire généré par IA (split d\'entraînement, nutrition, compléments) selon l\'objectif, le niveau et l\'équipement, avec une estimation du délai pour voir des résultats.',
-        'Images des exercices (wger.de) avec visionneuse zoomable et lien vidéo YouTube par exercice ; remplacement d\'un exercice ou d\'un complément par une alternative suggérée par l\'IA.',
-        'Sauvegarde des programmes sous un nom (3 emplacements par défaut, ajustables par un admin) et envoi d\'un programme à un autre utilisateur par e-mail, avec boîte de réception pour l\'accepter ou le refuser.',
-        'Coach de course à pied : journal d\'entraînement (CRUD) avec calories et pas estimés, plans d\'entraînement adaptatifs générés par IA, tableau de bord du volume hebdomadaire et de l\'allure.',
-        'Compteur de pas GPS : suivi en direct (démarrer, pause, reprendre, terminer) avec distance, pas et calories estimés, aperçu du parcours, historique des sessions et graphiques.',
-        'Authentification JWT avec rôles utilisateur/admin, suspension de compte et édition du profil ; panneau d\'administration (gestion des utilisateurs, statistiques, vues par utilisateur).',
-        'Interface français/anglais avec contenu généré par l\'IA traduit à la volée, responsive et mode sombre.',
-        'Monorepo : API Flask déployée sur Render (Docker + gunicorn) et application React + TypeScript déployée sur Cloudflare Pages, avec déploiement continu à chaque push GitHub.'
+        'Trois rôles (patient, médecin, admin) ; les visiteurs sans compte peuvent parcourir le site, préparer un rendez-vous et contacter la clinique.',
+        'Patients : inscription, réservation de créneaux réels (horaires d\'ouverture, sans chevauchement), annulation en ligne jusqu\'à 24 h avant, historique et messagerie avec la clinique.',
+        'Médecin : tableau de bord (rendez-vous du jour et de la semaine, demandes à confirmer, taux d\'annulation, actes les plus demandés) et agenda hebdomadaire pour confirmer, refuser, reprogrammer ou clôturer un rendez-vous.',
+        'Dossiers patients avec notes médicales privées, création de patients sans compte puis invitation par e-mail, messagerie avec filtres et archivage.',
+        'Admin : statistiques des utilisateurs, CRUD des comptes, changement de rôle, restriction / réactivation à effet immédiat.',
+        'E-mails transactionnels (Resend) : demande, confirmation, report et annulation de rendez-vous, réponses, invitation, réinitialisation du mot de passe.',
+        'Sécurité : mots de passe BCrypt, JWT, liens à usage unique stockés hachés, limitation de débit sur la connexion, l\'inscription et le formulaire de contact.',
+        'Interface français / anglais avec clés de traduction typées, thème clair / sombre / système, responsive, toasts, skeleton loaders et transitions de page.',
+        'Architecture : Angular 21 (standalone, signals, zoneless) sur Cloudflare Pages, API Spring Boot 4.1 / Java 21 sur Render (Docker), MongoDB Atlas.'
       ],
       detailsEn: [
-        'Gym coach: AI-generated weekly program (workout split, nutrition, supplements) based on goal, level and equipment, with an estimate of the time needed to see results.',
-        'Exercise images (wger.de) with a zoomable viewer and a YouTube video link per exercise; swap any exercise or supplement for an AI-suggested alternative.',
-        'Save programs under a name (3 slots by default, adjustable by an admin) and send a program to another user by email, with an inbox to accept or decline it.',
-        'Running coach: training log (CRUD) with derived calories and estimated steps, AI-generated adaptive training plans, and a dashboard with weekly volume and pace charts.',
-        'GPS step counter: live tracking (start, pause, resume, finish) with distance, estimated steps and calories, a route preview, session history and charts.',
-        'JWT authentication with user and admin roles, account suspension and profile editing; admin panel (user management, statistics, per-user views).',
-        'French / English interface with AI-generated content translated on the fly, responsive layout and dark mode.',
-        'Monorepo: Flask API deployed on Render (Docker + gunicorn) and React + TypeScript app deployed on Cloudflare Pages, with continuous deployment on every GitHub push.'
+        'Three roles (patient, doctor, admin); visitors without an account can browse the site, prepare an appointment and contact the clinic.',
+        'Patients: sign-up, booking of real time slots (opening hours, no overlaps), online cancellation up to 24 h before, history and messaging with the clinic.',
+        'Doctor: dashboard (today\'s and this week\'s appointments, requests to confirm, cancellation rate, most requested procedures) and a weekly agenda to confirm, decline, reschedule or complete an appointment.',
+        'Patient records with private medical notes, creation of patients without an account then invitation by email, messaging with filters and archiving.',
+        'Admin: user statistics, account CRUD, role changes, restrict / reactivate with immediate effect.',
+        'Transactional emails (Resend): appointment request, confirmation, rescheduling and cancellation, replies, invitation, password reset.',
+        'Security: BCrypt passwords, JWT, single-use links stored hashed, rate limiting on login, sign-up and the contact form.',
+        'French / English interface with typed translation keys, light / dark / system theme, responsive layout, toasts, skeleton loaders and page transitions.',
+        'Architecture: Angular 21 (standalone, signals, zoneless) on Cloudflare Pages, Spring Boot 4.1 / Java 21 API on Render (Docker), MongoDB Atlas.'
       ],
-      image: 'assets/images/python.webp',
-      tech: ['Python (Flask)', 'React', 'TypeScript', 'Tailwind CSS', 'MongoDB Atlas', 'Groq API', 'JWT', 'Docker', 'Render', 'Cloudflare Pages'],
+      image: 'assets/images/angularPic.png',
+      tech: ['Angular 21', 'Spring Boot 4.1', 'Java 21', 'Spring Security', 'JWT', 'MongoDB Atlas', 'Resend', 'Docker', 'Render', 'Cloudflare Pages'],
       period: 'Projet personnel',
       periodEn: 'Personal project',
-      link: 'https://vertex-coach.pages.dev',
-      githubLink: 'https://github.com/ACHRAF-BADRI/Vertex-AI-Coach'
+      link: 'https://badri-clinic.pages.dev',
+      githubLink: 'https://github.com/ACHRAF-BADRI/surgery-clinic-fullstack'
     },
     {
-      title: 'ScrumFlow — gestion de projets Scrum',
-      titleEn: 'ScrumFlow — Scrum Project Management',
+      title: 'ScrumFlow : gestion de projets Scrum',
+      titleEn: 'ScrumFlow: Scrum Project Management',
       description: 'Espace de travail pour les équipes Scrum : planification des sprints, backlog, tableau Kanban en glisser-déposer, burndown et vélocité, discussions sur chaque tâche et collaboration en temps réel.',
       descriptionEn: 'A workspace for Scrum teams: sprint planning, backlog, drag-and-drop board, burndown and velocity charts, discussions on each task and real-time collaboration.',
       details: [
@@ -167,6 +169,38 @@ export class ProjectsComponent implements OnInit {
       periodEn: 'Personal project',
       link: 'https://achrafweather.pages.dev/',
       githubLink: 'https://github.com/ACHRAF-BADRI/Weather-Application-NextJS'
+    },
+    {
+      title: 'Suivi d\'entraînement sportif assisté par IA',
+      titleEn: 'AI-Assisted Fitness Tracking',
+      description: 'Vertex AI Coach : plateforme de coaching sportif propulsée par l\'IA, coach de musculation (programme, nutrition, compléments), coach de course à pied (journal d\'entraînement, plans adaptatifs) et compteur de pas GPS.',
+      descriptionEn: 'Vertex AI Coach: an AI-powered fitness coaching platform, a gym coach (workout program, nutrition, supplements), a running coach (training log, adaptive training plans) and a GPS step counter.',
+      details: [
+        'Coach de musculation : programme hebdomadaire généré par IA (split d\'entraînement, nutrition, compléments) selon l\'objectif, le niveau et l\'équipement, avec une estimation du délai pour voir des résultats.',
+        'Images des exercices (wger.de) avec visionneuse zoomable et lien vidéo YouTube par exercice ; remplacement d\'un exercice ou d\'un complément par une alternative suggérée par l\'IA.',
+        'Sauvegarde des programmes sous un nom (3 emplacements par défaut, ajustables par un admin) et envoi d\'un programme à un autre utilisateur par e-mail, avec boîte de réception pour l\'accepter ou le refuser.',
+        'Coach de course à pied : journal d\'entraînement (CRUD) avec calories et pas estimés, plans d\'entraînement adaptatifs générés par IA, tableau de bord du volume hebdomadaire et de l\'allure.',
+        'Compteur de pas GPS : suivi en direct (démarrer, pause, reprendre, terminer) avec distance, pas et calories estimés, aperçu du parcours, historique des sessions et graphiques.',
+        'Authentification JWT avec rôles utilisateur/admin, suspension de compte et édition du profil ; panneau d\'administration (gestion des utilisateurs, statistiques, vues par utilisateur).',
+        'Interface français/anglais avec contenu généré par l\'IA traduit à la volée, responsive et mode sombre.',
+        'Monorepo : API Flask déployée sur Render (Docker + gunicorn) et application React + TypeScript déployée sur Cloudflare Pages, avec déploiement continu à chaque push GitHub.'
+      ],
+      detailsEn: [
+        'Gym coach: AI-generated weekly program (workout split, nutrition, supplements) based on goal, level and equipment, with an estimate of the time needed to see results.',
+        'Exercise images (wger.de) with a zoomable viewer and a YouTube video link per exercise; swap any exercise or supplement for an AI-suggested alternative.',
+        'Save programs under a name (3 slots by default, adjustable by an admin) and send a program to another user by email, with an inbox to accept or decline it.',
+        'Running coach: training log (CRUD) with derived calories and estimated steps, AI-generated adaptive training plans, and a dashboard with weekly volume and pace charts.',
+        'GPS step counter: live tracking (start, pause, resume, finish) with distance, estimated steps and calories, a route preview, session history and charts.',
+        'JWT authentication with user and admin roles, account suspension and profile editing; admin panel (user management, statistics, per-user views).',
+        'French / English interface with AI-generated content translated on the fly, responsive layout and dark mode.',
+        'Monorepo: Flask API deployed on Render (Docker + gunicorn) and React + TypeScript app deployed on Cloudflare Pages, with continuous deployment on every GitHub push.'
+      ],
+      image: 'assets/images/python.webp',
+      tech: ['Python (Flask)', 'React', 'TypeScript', 'Tailwind CSS', 'MongoDB Atlas', 'Groq API', 'JWT', 'Docker', 'Render', 'Cloudflare Pages'],
+      period: 'Projet personnel',
+      periodEn: 'Personal project',
+      link: 'https://vertex-coach.pages.dev',
+      githubLink: 'https://github.com/ACHRAF-BADRI/Vertex-AI-Coach'
     },
     {
       title: 'Projet (React)',
